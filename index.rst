@@ -19,24 +19,20 @@
 .. only:: html
 
    .. image:: images/intro_logo.png
-      :width: 140px
+      :width: 126px
       :align: left
 
 .. index::
-   single: Geodatabase
-   single: prostorová databáze
+   single: GDAL
 
-Prostorové databáze umožňují se efektivně dotazovat pomocí
-prostorových dotazů na prostorové vazby mezi objekty a
-jevy. Prostorové databáze mohou být serverové, souborové nebo
-cloudové.
+`GDAL <https://gdal.org>`__ - GeoData Abstraction Library - je sada nástrojů a programátorských knihoven pro práci s rastrovými a vektorovými daty.
 
 .. only:: latex
 
    .. figure:: images/intro_logo.png
       :scale-latex: 150
 
-      Logo projektu GeoServer.
+      Logo projektu GDAL.
 
 .. only:: html
 
@@ -44,9 +40,7 @@ cloudové.
 
    \newpage
 
-Školení se věnuje zejména souborovým prostorovým databázím,
-ke kterým je možné přistupovat např. s využitím
-knihovny `GDAL <https://gdal.org>`__.
+Pro práci s vektorovými daty slouží část knihovny GDAL, která se jmenuje OGR (OpenGIS Simple Features Reference Implementation).
 
 .. only:: html
              
@@ -58,8 +52,8 @@ knihovny `GDAL <https://gdal.org>`__.
    :maxdepth: 2
 
    intro/index
-   sql/index
-   spatial/index
+   gdal/index
+   ogr/index
 
 *******
 Dodatky
@@ -83,7 +77,7 @@ Autoři
 
 Za `GISMentors <http://www.gismentors.cz/>`_:
 
-* `Jan Růžička <http://www.gismentors.cz/mentors/ruzicka/>`_
+* `Jáchym Čepický <http://www.gismentors.cz/mentors/cepicky/>`_
 
 Text dokumentu
 --------------
@@ -92,15 +86,12 @@ Text dokumentu
 
    Online HTML verze textu školení je dostupná na adrese:
 
-   * http://training.gismentors.eu/prostorove-databaze/
+   * http://training.gismentors.eu/gdal-workshop/
 
 Zdrojové texty školení jsou dostupné na adrese:
 
-* https://github.com/GISMentors/prostorove-databaze
+* https://github.com/GISMentors/gdal-workshop
 
 Případné chyby nebo náměty na vylepšení můžete hlásit:
 
-* https://github.com/GISMentors/prostorove-databaze/issues
-  
-
-
+* https://github.com/GISMentors/gdal-workshop/issues
