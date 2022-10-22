@@ -69,5 +69,6 @@ GDAL podporuje více než `170 rastrových formátů <https://gdal.org/drivers/r
    :maxdepth: 2
 
    gdalinfo
+   gdalwarp
 
 

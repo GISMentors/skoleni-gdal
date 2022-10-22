@@ -39,6 +39,8 @@ Obecné parametry
 Všechny příkazy GDAL mají společnou sadu parametrů, které můžete použít pro získání informace o systému:
 
 
+``--help``
+        Rychlá nápověda
 ``--version``
         Verze knihovny GDAL
 ``--build``
@@ -60,5 +62,6 @@ Příklad použití:
 
 .. code-block::
         
+        gdalinfo --help
         gdalinfo --formats
         gdalinfo --format gtiff
