@@ -1,4 +1,4 @@
-Šablona školení GISMentors
-==========================
+Školení a workshop GDAL
+=======================
 
-Použít jako šablonu pro další školení
+Úvod do světa GIS bez GISů - knihovna [GDAL](https://gdal.org) a její nástroje na příkazové řádce
