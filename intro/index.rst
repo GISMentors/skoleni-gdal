@@ -65,3 +65,12 @@ Příklad použití:
         gdalinfo --help
         gdalinfo --formats
         gdalinfo --format gtiff
+
+Na čem stojí GDAL
+^^^^^^^^^^^^^^^^^
+GDAL nefunguje jako knihovna sám o sobě, je napojen na celou řadu jiných knihoven zásadních pro GIS.
+
+* Proj4 - pro práci s projekcemi
+* Geos - pro práci s vektorovými daty a řešení topologických úloh
+* SQLite3
+* ...

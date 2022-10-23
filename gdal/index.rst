@@ -63,6 +63,7 @@ Podporované formáty
 -------------------
 GDAL podporuje více než `170 rastrových formátů <https://gdal.org/drivers/raster/index.html>`_. Ne všechny jsou zakompilované do verze knihovny na vašem počítači (běžně je nainstalována podpora pro cca 150 formátů).
 
+Spolu s knihovnou se nainstaluje do systému celá řada užitečných programů, některé z nich proberem podrobněji. Jejich úplný seznam najdete na `https://gdal.org/programs/index.html <https://gdal.org/programs/index.html>`_
 
 
 .. toctree::
@@ -70,5 +71,14 @@ GDAL podporuje více než `170 rastrových formátů <https://gdal.org/drivers/r
 
    gdalinfo
    gdalwarp
-
-
+   gdal_translate
+   gdaladdo
+   gdaltindex
+   gdal_contour
+   gdaldem
+   gdal_merge
+   gdalmanage
+   gtiff
+   vrt
+   wms
+   virtual_filesystems
