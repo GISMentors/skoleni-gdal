@@ -4,7 +4,7 @@ ogrinfo
 `ogrinfo <https://gdal.org/programs/ogrinfo.html>`_ - vypíše informace o vektorovém datovém zdroji
 
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo [--help-general] [-ro] [-q] [-where restricted_where|@filename]
                [-spat xmin ymin xmax ymax] [-geomfield field] [-fid fid]
@@ -17,13 +17,13 @@ ogrinfo
 
 Příklad použití:
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo _data/659673/KATASTRALNI_UZEMI_L.shp
 
 Příklad výstupu:
 
-.. code-block::
+.. code-block:: text
 
         INFO: Open of `_data/659673/KATASTRALNI_UZEMI_L.shp'
               using driver `ESRI Shapefile' successful.
@@ -35,13 +35,13 @@ souborový a je v něm pouze jedna vrstva - ta má stejný název jako jméno so
 
 Pro více informací musíme zadat ještě jméno vrstvy.
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo _data/659673/KATASTRALNI_UZEMI_L.shp KATASTRALNI_UZEMI_L
 
 Výstup:
 
-.. code-block::
+.. code-block:: text
 
         INFO: Open of `_data/659673/KATASTRALNI_UZEMI_L.shp'
               using driver `ESRI Shapefile' successful.
@@ -180,7 +180,7 @@ ogrinfo -so
 Přepínač ``-so`` - summary only - nám vypíše všechna potřebná metadata, ale už
 ne všechny prvky a jejich geometrie. To je většinou to, co chceme
 
-.. code-block::
+.. code-block:: text
    
         ogrinfo -so _data/659673/KATASTRALNI_UZEMI_L.shp KATASTRALNI_UZEMI_L
 
@@ -191,7 +191,7 @@ Přepínač ``-al`` all layers - vypíše údaje ke všem vrstvám v datasetu. V
 souborových datasetů tedy pouze k jedné z nich. Nemusíte tedy vypisovat znova
 jméno souboru.
 
-.. code-block::
+.. code-block:: text
    
         ogrinfo -so -al _data/659673/KATASTRALNI_UZEMI_L.shp
 
@@ -202,7 +202,7 @@ ogrinfo -geom
 Výpis z geometrie lze trochu zkrátit - někdy stačí pouze datový typ, počet prvků
 
 
-.. code-block::
+.. code-block:: text
    
         ogrinfo _data/659673/KATASTRALNI_UZEMI_P.shp -geom=SUMMARY KATASTRALNI_UZEMI_P
 
@@ -212,7 +212,7 @@ ogrinfo -fields
 Stejně tak můžeme nechat vypsat pouze geometrii, bez dalších atributů
 
 
-.. code-block::
+.. code-block:: text
    
         ogrinfo _data/659673/KATASTRALNI_UZEMI_P.shp -fields=NO KATASTRALNI_UZEMI_P
 
@@ -223,13 +223,13 @@ Můžeme vyfiltrovat pouze některé prvky prostorovým filtrem
 
 Porovnejte výstup
 
-.. code-block::
+.. code-block:: text
    
         ogrinfo -so _data/659673/PARCELY_KN_P.shp PARCELY_KN_P
 
 s
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo -so -spat -671296 -1131933 -669825 -1131926 _data/659673/PARCELY_KN_P.shp PARCELY_KN_P
 
@@ -240,7 +240,7 @@ ogrinfo -fid
 Můžeme se doptat na konkrétní prvek podle jeho ID - myslí se tím ID v datové
 sadě, ne atributu (např. čísla parcely).
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo -fid 20191 _data/659673/PARCELY_KN_P.shp PARCELY_KN_P
 
@@ -253,7 +253,7 @@ některé atributy, například vybrat parcely pouze z určitého typu území
 
 1. Zjistíme počet prvků v databázi, ve vrstvě ``parcely``
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo _data/ruian_jihlava.gpkg parcely -so
 
@@ -263,19 +263,19 @@ některé atributy, například vybrat parcely pouze z určitého typu území
    zazipovaný. S GDAL otevřít tento číselník není žádný problém, využijeme k
    tomu virtuální filesystémy ``/vsicurl`` a ``/vsizip`` a dáme je za sebe. Díky tomu můžeme zobrazit obsah CSV ze vzdálené URL přímo:
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo /vsizip/vsicurl/https://www.cuzk.cz/CUZK/media/CiselnikyISKN/SC_D_POZEMKU/SC_D_POZEMKU.zip SC_D_POZEMKU
 
 4. Vybereme pouze zastavěné pozemky a nádvoří
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo /vsizip/vsicurl/https://www.cuzk.cz/CUZK/media/CiselnikyISKN/SC_D_POZEMKU/SC_D_POZEMKU.zip SC_D_POZEMKU -where "KOD='13'"
 
 5. Můžeme prozkoumat vybrané parcely (kód využití ``13``)
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo _data/ruian_jihlava.gpkg parcely -where "ZpusobyVyuzitiPozemku=13" -so
 
@@ -284,7 +284,7 @@ ogrinfo -sql
 
 Parametr ``-sql`` jde ještě dál - umožní využít síly standardu SQL při dotazování
 
-.. code-block::
+.. code-block:: text
 
         ogrinfo _data/ruian_jihlava.gpkg -sql "SELECT max(ST_Area(geom)) from parcely"
 
