@@ -204,7 +204,7 @@ Výpis z geometrie lze trochu zkrátit - někdy stačí pouze datový typ, poče
         ogrinfo _data/659673/KATASTRALNI_UZEMI_P.shp -geom=SUMMARY KATASTRALNI_UZEMI_P
 
 ogrinfo -fields
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 Stejně tak můžeme nechat vypsat pouze geometrii, bez dalších atributů
 

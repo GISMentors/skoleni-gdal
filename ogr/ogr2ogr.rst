@@ -84,6 +84,7 @@ nebo pomocí přepínače ``--format``
 Pokud chceme vidět postup zpracování, přidáme přepínač `-progress`
 
 .. code-block::
+
         ogr2ogr -progress _data/katastralni_uzemi.gpkg _data/659673/KATASTRALNI_UZEMI_L.shp
 
 
@@ -126,18 +127,21 @@ Můžeme vybrat konkrétní provek na základě jeho ID ``-fid`` (a uložení do
 existujícího souboru, do nové vrstvy)
 
 .. code-block::
+
         ogr2ogr -fid 23214 _data/jihlava_parcely.gpkg -nln prior _data/ruian_jihlava.gpkg parcely
         ogrinfo _data/jihlava_parcely.gpkg prior
 
 Můžeme omezit maximální počet prvků ``-limit``
 
 .. code-block::
+
         ogr2ogr -limit 10 _data/jihlava_parcely.gpkg -nln parcely_10 _data/ruian_jihlava.gpkg parcely
         ogrinfo _data/jihlava_parcely.gpkg parcely_10
 
 Můžeme uplatnit SQL podmínku ``-where``
 
 .. code-block::
+
         ogr2ogr -where "DruhPozemkuKod=14" _data/jihlava_parcely.gpkg -nln zahrady _data/ruian_jihlava.gpkg parcely
         ogrinfo _data/jihlava_parcely.gpkg zahrady
 
