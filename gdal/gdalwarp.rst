@@ -5,25 +5,25 @@ gdalwarp
 
 .. code-block::
 
-        Usage: gdalwarp [--help-general] [--formats]
-            [-s_srs srs_def] [-t_srs srs_def] [-to "NAME=VALUE"]* [-vshift | -novshift]
-            [[-s_coord_epoch epoch] | [-t_coord_epoch epoch]]
-            [-order n | -tps | -rpc | -geoloc] [-et err_threshold]
-            [-refine_gcps tolerance [minimum_gcps]]
-            [-te xmin ymin xmax ymax] [-tr xres yres] [-tap] [-ts width height]
-            [-ovr level|AUTO|AUTO-n|NONE] [-wo "NAME=VALUE"] [-ot Byte/Int16/...] [-wt Byte/Int16]
-            [-srcnodata "value [value...]"] [-dstnodata "value [value...]"] -dstalpha
-            [-r resampling_method] [-wm memory_in_mb] [-multi] [-q]
-            [-cutline datasource] [-cl layer] [-cwhere expression]
-            [-csql statement] [-cblend dist_in_pixels] [-crop_to_cutline]
-            [-if format]* [-of format] [-co "NAME=VALUE"]* [-overwrite]
-            [-nomd] [-cvmd meta_conflict_value] [-setci] [-oo NAME=VALUE]*
-            [-doo NAME=VALUE]*
-            srcfile* dstfile
-
-        Available resampling methods:
-            near (default), bilinear, cubic, cubicspline, lanczos, average, rms,
-            mode,  max, min, med, Q1, Q3, sum.
+    Usage: gdalwarp [--help-general] [--formats]
+        [-s_srs srs_def] [-t_srs srs_def] [-to "NAME=VALUE"]* [-vshift | -novshift]
+        [[-s_coord_epoch epoch] | [-t_coord_epoch epoch]]
+        [-order n | -tps | -rpc | -geoloc] [-et err_threshold]
+        [-refine_gcps tolerance [minimum_gcps]]
+        [-te xmin ymin xmax ymax] [-tr xres yres] [-tap] [-ts width height]
+        [-ovr level|AUTO|AUTO-n|NONE] [-wo "NAME=VALUE"] [-ot Byte/Int16/...] [-wt Byte/Int16]
+        [-srcnodata "value [value...]"] [-dstnodata "value [value...]"] -dstalpha
+        [-r resampling_method] [-wm memory_in_mb] [-multi] [-q]
+        [-cutline datasource] [-cl layer] [-cwhere expression]
+        [-csql statement] [-cblend dist_in_pixels] [-crop_to_cutline]
+        [-if format]* [-of format] [-co "NAME=VALUE"]* [-overwrite]
+        [-nomd] [-cvmd meta_conflict_value] [-setci] [-oo NAME=VALUE]*
+        [-doo NAME=VALUE]*
+        srcfile* dstfile
+    
+    Available resampling methods:
+        near (default), bilinear, cubic, cubicspline, lanczos, average, rms,
+        mode,  max, min, med, Q1, Q3, sum.
 
 
 Příklad použití:
