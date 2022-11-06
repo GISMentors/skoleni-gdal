@@ -78,6 +78,7 @@ Spolu s knihovnou se nainstaluje do systému celá řada užitečných programů
    gdaldem
    gdal_merge
    gdalmanage
+   gdal_rasterize
    gtiff
    vrt
    wms
