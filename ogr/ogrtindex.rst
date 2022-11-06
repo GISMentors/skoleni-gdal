@@ -5,7 +5,7 @@ ogrtindex
 index vektorových dat
 
 
-.. code-block::
+.. code-block:: text
 
 
         Usage: ogrtindex [-lnum n]... [-lname name]... [-f output_format]
@@ -41,7 +41,7 @@ index vektorových dat
 
 Příklad použití:
 
-.. code-block::
+.. code-block:: text
 
         ogrtindex tindex-shp.gpkg _data/*.shp
 
