@@ -11,12 +11,12 @@ gdaldem
 
 Výpočet sklonu svahu
 
-.. code-block::
+.. code-block:: text
 
    gdaldem slope _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-krovak.tiff _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-slope.tiff
 
 Výpočet stínovaného reliéfu
 
-.. code-block::
+.. code-block:: text
 
    gdaldem hillshade _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-krovak.tiff _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-hillshade.tiff

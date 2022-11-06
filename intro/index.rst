@@ -20,13 +20,13 @@ Parametry příkazů
 
 Obecná struktura použití příkazů vypadá následovně:
 
-.. code-block::
+.. code-block:: text
 
         příkaz [-parametr [hodnota]] [--obecny_parametr] soubor [výstupní_soubor]
 
 Příklad
 
-.. code-block::
+.. code-block:: text
         
         gdalinfo soubor.tif
 
@@ -60,7 +60,7 @@ Všechny příkazy GDAL mají společnou sadu parametrů, které můžete použ�
 
 Příklad použití:
 
-.. code-block::
+.. code-block:: text
         
         gdalinfo --help
         gdalinfo --formats

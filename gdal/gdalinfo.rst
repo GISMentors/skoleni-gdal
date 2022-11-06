@@ -4,7 +4,7 @@ gdalinfo
 `gdalinfo <https://gdal.org/programs/gdalinfo.html>`_ - vypíše informace o rastrovém datasetu
 
 
-.. code-block::
+.. code-block:: text
 
         gdalinfo [--help-general] [-json] [-mm] [-stats | -approx_stats] [-hist] [-nogcp] [-nomd]
                  [-norat] [-noct] [-nofl] [-checksum] [-proj4]
@@ -13,13 +13,13 @@ gdalinfo
 
 Příklad použití:
 
-.. code-block::
+.. code-block:: text
 
         gdalinfo data/T33UWQ_20220907T095549_TCI.jp2
 
 Příklad výstupu:
 
-.. code-block::
+.. code-block:: text
 
         Driver: JP2OpenJPEG/JPEG-2000 driver based on OpenJPEG library
         Files: data/T33UWQ_20220907T095549_TCI.jp2
@@ -129,7 +129,7 @@ gdalinfo -stats
 
 Parametr ``-stats`` provede výpočet základních statistik rastrového souboru. Pokud to formát umožňuje, uloží je pro příští použití. Pokud to formát neumožňuje, vytvoří speciální metadatový soubor s příponou ``.aux.xml``
 
-.. code-block::
+.. code-block:: text
 
         gdalinfo -stats data/T33UWQ_20220907T095549_TCI.jp2
 
@@ -137,7 +137,7 @@ Výpočet trvá déle, statistika se zpracovává pro všechny kanály.
 
 Příklad výstupu:
 
-.. code-block::
+.. code-block:: text
 
         [...]
 
@@ -185,13 +185,13 @@ gdalinfo -hist
 
 Parametr ``-hist`` vypíše tabulku výskytů jednotlivých kategorií pro možnost vykreslení histogramu
 
-.. code-block::
+.. code-block:: text
 
         gdalinfo -hist data/T33UWQ_20220907T095549_B08.jp2
 
 Příklad výstupu:
 
-.. code-block::
+.. code-block:: text
 
    [...]
    
@@ -204,13 +204,13 @@ gdalinfo -json
 
 Parametr ``-json`` dá stejný výstup, ale místo špatně zpracovatelného textového formátu bude výstup ve formátu JSON
 
-.. code-block::
+.. code-block:: text
 
         gdalinfo -json data/T33UWQ_20220907T095549_B08.jp2
 
 Příklad výstupu:
 
-.. code-block::
+.. code-block:: text
 
         {
           "description":"data/T33UWQ_20220907T095549_B08.jp2",

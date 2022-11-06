@@ -3,7 +3,7 @@ gdalmanage
 
 U některých více-souborových formátů je ošidné přejmenovávat nebo kopírovat data "ručně". ``gdalmanage`` umožní mazat, kopírovat a přejmenovat datové formáty komplexně. Také nám vypíše jména a formáty souboru v datové sadě
 
-.. code-block::
+.. code-block:: text
 
         gdalmanage identify _data/*
 

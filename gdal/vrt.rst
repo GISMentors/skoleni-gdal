@@ -7,7 +7,7 @@ Transformace souřadnicového systému
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Jako první příklad prostě pouze ztransformujeme souřadnicový systém vstupního souboru:
 
-.. code-block::
+.. code-block:: text
 
    gdalwarp -t_srs epsg:5514 -of VRT _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-krovak.vrt
 
@@ -15,7 +15,7 @@ Jako první příklad prostě pouze ztransformujeme souřadnicový systém vstup
 
 Podíváme-li se na VRT soubor blíže, uvidíme, že se jedná o celkem malý soubor XML
 
-.. code-block::
+.. code-block:: XML
 
         <VRTDataset rasterXSize="1093" rasterYSize="1524" subClass="VRTWarpedDataset">
           <SRS dataAxisToSRSAxisMapping="1,2">PROJCS["S-JTSK / Krovak East North",GEOGCS["S-JTSK",DATUM["System_of_the_Unified_Trigonometrical_Cadastral_Network",SPHEROID["Bessel 1841",6377397.155,299.1528128,AUTHORITY["EPSG","7004"]],AUTHORITY["EPSG","6156"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4156"]],PROJECTION["Krovak"],PARAMETER["latitude_of_center",49.5],PARAMETER["longitude_of_center",24.8333333333333],PARAMETER["azimuth",30.2881397527778],PARAMETER["pseudo_standard_parallel_1",78.5],PARAMETER["scale_factor",0.9999],PARAMETER["false_easting",0],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","5514"]]</SRS>
@@ -74,7 +74,7 @@ Spojení více souborů do jednoho - gdalbuildvrt
 
 Pomocí ``gdalbuildvrt`` můžeme spojit více souborů do jednoho
 
-.. code-block::
+.. code-block:: text
 
    gdalbuildvrt _data/dem.vrt _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/Copernicus_DSM_COG_30_N50_00_E015_00_DEM.tif
 
@@ -85,7 +85,7 @@ Vložení kódu Python do VRT
 
 Do VRT souboru lze přímo vložit kód v jazyce Python. Kód lze i udržovat v externím souboru. Příklad je převod výšky v metrech na stopy:
 
-.. code-block::
+.. code-block:: XML
 
         <VRTDataset rasterXSize="1200" rasterYSize="1200">
           <SRS dataAxisToSRSAxisMapping="2,1">GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AXIS["Latitude",NORTH],AXIS["Longitude",EAST],AUTHORITY["EPSG","4326"]]</SRS>
@@ -111,7 +111,7 @@ Do VRT souboru lze přímo vložit kód v jazyce Python. Kód lze i udržovat v 
 
 A můžeme se pokusit získat statistické údaje
 
-.. code-block::
+.. code-block:: text
 
    gdalinfo _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-feets.vrt -stats
 

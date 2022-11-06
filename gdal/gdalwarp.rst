@@ -28,20 +28,20 @@ gdalwarp
 
 Příklad použití:
 
-.. code-block::
+.. code-block:: text
 
         gdalwarp _data/T33UWQ_20220907T095549_TCI.jp2 _data/T33UWQ_20220907T095549_TCI.tiff
 
 Příklad výstupu:
 
-.. code-block::
+.. code-block:: text
 
         Creating output file that is 10980P x 10980L.
         Processing _data/T33UWQ_20220907T095549_TCI.jp2 [1/1] : 0...10...20...30...40...50...60...70...80...90...100 - done.
 
 Výstupní soubor není jinak komprimovaný a je uložený ve formátu GeoTIFF
 
-.. code-block::
+.. code-block:: text
 
         gdalinfo _data/T33UWQ_20220907T095549_TCI.tiff
 
@@ -57,7 +57,7 @@ Změna formátu
 
 Většinou stačí použít správnou koncovku souboru (``.tiff``, ``jp2``, ...). Formát souboru můžete vynutit parametrem ``-of``
 
-.. code-block::
+.. code-block:: text
 
         gdalwarp -of GTiff _data/T33UWQ_20220907T095549_B02.jp2 _data/T33UWQ_20220907T095549_B02.tiff
 
@@ -68,7 +68,7 @@ Pro přiřazení zdrojového souřadnicového systému (pokud není známý), po
 
 Pro cílový systém použijte parametr ``-t_srs``. Můžete využít zápis pomocí ``EPSG:číslo``.
 
-.. code-block::
+.. code-block:: text
 
    gdalwarp -t_srs epsg:3857 _data/T33UWQ_20220907T095549_B02.jp2 _data/T33UWQ_20220907T095549_B02-mercator.tiff
 
@@ -77,7 +77,7 @@ Výřez z rastru pomocí hraničních souřadnic
 
 Výřez zájmové oblasti lze získat parametrem  ``-te minx miny maxx maxy`` (target extent). Souřadnice jsou v cílovém souřadnicovém systému.
 
-.. code-block::
+.. code-block:: text
 
         gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733  _data/T33UWQ_20220907T095549_B02.jp2 _data/T33UWQ_20220907T095549_B02-krovak-jihlava.tiff
 
@@ -100,13 +100,13 @@ Důležitý je také přepínač ``-tap`` (target aligned pixels) - hraniční s
 **Příklad:**
 
 Digitální model terénu zájmové oblasti:
-.. code-block::
+.. code-block:: text
 
         gdalinfo _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif 
         [...]
 
 Převod na S-JTSK, region Jihlava, v požadovaném rozlišení:
-.. code-block::
+.. code-block:: text
 
         gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733 -tr 80 80 _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava.tiff
 
@@ -120,13 +120,13 @@ Převod na S-JTSK, region Jihlava, v požadovaném rozlišení:
 
 Využití parametru ``-tap`` pro přesné "zaříznutí" okrajů.
 
-.. code-block::
+.. code-block:: text
 
         gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733 -tr 80 80 _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava-tap.tiff
 
 Převzorkování na 2x lepší rozlišení
 
-.. code-block::
+.. code-block:: text
 
         gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733 -tr 40 40 -r cubicspline _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava-40m.tiff
 
@@ -135,7 +135,7 @@ Ořez pomocí vektorové vrstvy
 
 Parametrem ``-cutline`` můžeme definovat vektorovou vrstvu, která bude použita na ořez rastrových buněk.
 
-.. code-block::
+.. code-block:: text
 
         gdalwarp -t_srs epsg:5514 -cutline _data/659673/KATASTRALNI_UZEMI_P.shp _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava-cut.tiff
 
@@ -158,6 +158,6 @@ Pro vstupní rastr můžeme hodnotu vynutit, pro výstupní nastavit parametry `
 
 V našem případě nastavíme hodnotu NODATA na hodnotu -9999, aby při prohlížení nebyl rastr "černý".
 
-.. code-block::
+.. code-block:: text
 
         gdalwarp -t_srs epsg:5514 -dstnodata -9999 -cutline _data/659673/KATASTRALNI_UZEMI_P.shp _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava-nodata.tiff

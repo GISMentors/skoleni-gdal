@@ -18,14 +18,14 @@ Virtuální systémy se píší před název souboru a jdou řetězit.
 
 A mnoho dalších
 
-.. code-block:: 
+.. code-block:: text 
 
         export AWS_NO_SIGN_REQUEST=YES
         gdalinfo /vsis3_streaming/copernicus-dem-90m/Copernicus_DSM_COG_30_N49_00_E015_00_DEM/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif
 
 A výstup
 
-.. code-block::
+.. code-block:: text
 
         Driver: GTiff/GeoTIFF
         Files: /vsis3_streaming/copernicus-dem-90m/Copernicus_DSM_COG_30_N49_00_E015_00_DEM/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif

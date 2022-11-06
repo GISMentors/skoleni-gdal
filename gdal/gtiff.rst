@@ -4,7 +4,7 @@ Každý formát má specifické možnosti, jak jeho použití zoptimalizovat. N�
 
 Hodnoty specifické pro vstupní i výstupní formáty jsou popsány v dokumentaci ale i pomocí ``gdalinfo``
 
-.. code-block::
+.. code-block:: text
 
         gdalinfo --format geotiff
 
@@ -25,7 +25,7 @@ GeoTIFF ve výchozím nastavení nepoužívá vnitřní kompresi. To vede k velk
 
 a mnoha dalších.
 
-.. code-block::
+.. code-block:: text
 
    gdalwarp -co COMPRESS=DEFLATE _data/T33UWQ_20220907T095549_TCI.jp2 _data/T33UWQ_20220907T095549_TCI-compress.tiff
 
@@ -45,7 +45,7 @@ Block Window
 
 Většinou jsou data uložena po řádcích, a to není moc vhodné na čtení a následné zpracování. Může být vhodné organizovat data do bloků (block window):
 
-.. code-block::
+.. code-block:: text
 
    gdalinfo _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif
 
@@ -54,7 +54,7 @@ Většinou jsou data uložena po řádcích, a to není moc vhodné na čtení a
 
 Bloky můžeme nastavit atributy ``BLOCKYSIZE`` a ``BLOCKXSIZE``. Bloky musí být dělitelné 16.
 
-.. code-block::
+.. code-block:: text
 
    gdalwarp -co TILED=YES -co BLOCKXSIZE=1024 -co BLOCKYSIZE=1024 _data/T33UWQ_20220907T095549_TCI.jp2 _data/T33UWQ_20220907T095549_TCI-block.tiff
 
@@ -70,6 +70,6 @@ Velký TIFF
 ^^^^^^^^^^
 Formát TIFF má omezení velikosti souboru. Toto omezení lze obejít přepínačem ``BIGTIFF``
 
-.. code-block::
+.. code-block:: text
 
         gdalwarp -co BIGTIFF=YES input.tiff output.tiff
