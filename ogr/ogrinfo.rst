@@ -163,12 +163,15 @@ Výstup:
 
 
 .. task::
+
    Jaké atributy vrstva obsahuje?
 
 .. task::
+
    O jaký typ geometrie se jedná?
 
 .. task::
+
    Kolik prvků je ve vrstvě dostupných?
 
 ogrinfo -so

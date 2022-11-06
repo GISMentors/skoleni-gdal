@@ -258,8 +258,6 @@ ESRI Shapefile
 
         ogr2ogr -oo ENCODING=Windows-1250 -lco ENCODING=UTF-8 -lco 2GB_LIMIT=NO -lco SPATIAL_INDEX=YES _data/katastralni_uzemi-utf.shp _data/659673/KATASTRALNI_UZEMI_L.shp
 
-
-
 CSV
 """
 
