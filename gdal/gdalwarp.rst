@@ -3,7 +3,7 @@ gdalwarp
 
 `gdalwarp <https://gdal.org/programs/gdalwarp.html>`_ - transformuje rastrové soubory do různých formátů, pomáhá s tvorbou výřezů, změna rozlišení, atd.
 
-.. code-block::
+.. code-block:: text
 
     Usage: gdalwarp [--help-general] [--formats]
         [-s_srs srs_def] [-t_srs srs_def] [-to "NAME=VALUE"]* [-vshift | -novshift]
