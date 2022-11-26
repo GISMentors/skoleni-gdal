@@ -9,6 +9,7 @@ Přehledy lze vytvářet přímo při vytváření, např. ``gdalwarp`` má para
 Pro většinu případů je zbytečné zabývat se parametry. ``gdaladdo`` vám umožní hrát si s interpolační metodou, počtem úrovní, kompresí a podobně. Nejčastější použití je ale velice přímočaré:
 
 Ověříme velikost vstupního souboru
+
 .. code-block:: text
 
         ls -lha _data/T33UWQ_20220907T095549_TCI.tiff 
@@ -16,11 +17,13 @@ Ověříme velikost vstupního souboru
         -rw-rw-r-- 1 user user 345M říj 22 14:16 _data/T33UWQ_20220907T095549_TCI.tiff
 
 Přidáme přehledy
+
 .. code-block:: text
 
         gdaladdo _data/T33UWQ_20220907T095549_TCI.tiff
 
 A opět ověříme velikost
+
 .. code-block:: text
 
     ls -lha _data/T33UWQ_20220907T095549_TCI.tiff 
