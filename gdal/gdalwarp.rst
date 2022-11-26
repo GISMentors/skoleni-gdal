@@ -100,12 +100,14 @@ Důležitý je také přepínač ``-tap`` (target aligned pixels) - hraniční s
 **Příklad:**
 
 Digitální model terénu zájmové oblasti:
+
 .. code-block:: text
 
         gdalinfo _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif 
         [...]
 
 Převod na S-JTSK, region Jihlava, v požadovaném rozlišení:
+
 .. code-block:: text
 
         gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733 -tr 80 80 _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava.tiff
