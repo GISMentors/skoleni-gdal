@@ -1,0 +1,23 @@
+/*
+ * gismentors.css
+ * ~~~~~~~~~~~~~~
+ *
+ * Customized GISMentors stylesheet
+ *
+ */
+
+@import url("gismentors_base.css");
+
+a {
+  color: #008f00;
+}
+
+div.footer-wrapper {
+  background: #70c8f0;
+  color: red;
+}
+
+div.header-wrapper { 
+    background: #70c8f0; 
+}
+

@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Rastrová data - GDAL &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="gdalinfo" href="gdalinfo.html" />
+    <link rel="prev" title="Úvod do knihovny GDAL" href="../intro/index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../intro/index.html" title="Úvod do knihovny GDAL"
+             accesskey="P">předchozí</a> |
+          <a href="gdalinfo.html" title="gdalinfo"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="rastrova-data-gdal">
+<h1>Rastrová data - GDAL<a class="headerlink" href="#rastrova-data-gdal" title="Permalink to this heading">¶</a></h1>
+<p>Pro práci s rastrovými geodaty se „tradičně“ používá knihovna GDAL. Knihovna GDAL je nízkoúrovňová, přistupuje k datům pokud možno efektivním způsobem. V současnosti knihovna GDAL podporuje více než 140 rastrových GIS formátů.
+Datový model</p>
+<p>Koncept pro rastrová data do značné míry odpovídá přístupu k vektorovým datům:</p>
+<blockquote>
+<div><dl class="simple">
+<dt><strong>Driver</strong></dt><dd><p>ovladač pro čtení a zápis dat</p>
+</dd>
+<dt><strong>Datasource</strong></dt><dd><p>zdroj dat, ze kterého a do kterého se čte a zapisuje</p>
+</dd>
+<dt><strong>RasterBand</strong></dt><dd><p>rastrový kanál. U něterých zdrojů dat je jenom jedno pásmo, ale může jich mít teoreticky neomezeně (např. u hyperspektrálních dat).</p>
+</dd>
+</dl>
+</div></blockquote>
+<section id="rastrovy-datovy-model">
+<h2>Rastrový datový model<a class="headerlink" href="#rastrovy-datovy-model" title="Permalink to this heading">¶</a></h2>
+<figure class="align-center">
+<img alt="../_images/gdal-schema.png" class="middle" src="../_images/gdal-schema.png" />
+</figure>
+<section id="dataset">
+<h3>Dataset<a class="headerlink" href="#dataset" title="Permalink to this heading">¶</a></h3>
+<p>Soubor kanálů rastrového datového zdroje a některých vlastností, které mají společné</p>
+<ul class="simple">
+<li><p>Velikost rastru (počet pixelů)</p></li>
+<li><p>Georeferencing</p></li>
+<li><p>Metadata</p></li>
+</ul>
+</section>
+<section id="souradnicovy-system-coordinate-system">
+<h3>Souřadnicový systém (Coordinate system)<a class="headerlink" href="#souradnicovy-system-coordinate-system" title="Permalink to this heading">¶</a></h3>
+<p>Reprezentován jako OpenGIS Well Known Text (WKT).</p>
+</section>
+<section id="metadata">
+<h3>Metadata<a class="headerlink" href="#metadata" title="Permalink to this heading">¶</a></h3>
+<p>Páry klíč-hodnota.</p>
+</section>
+<section id="subdataset">
+<h3>Subdataset<a class="headerlink" href="#subdataset" title="Permalink to this heading">¶</a></h3>
+<p>Seznam podřízených datasetů. Většinou seznam kanálů nebo obrázků uložených v jednom datovém zdroji.</p>
+</section>
+<section id="rastrovy-kanal-raster-band">
+<h3>Rastrový kanál (Raster band)<a class="headerlink" href="#rastrovy-kanal-raster-band" title="Permalink to this heading">¶</a></h3>
+<p>Band/channel/layer - kanál, vrstva. Například kanály R, G, B, NIR, …</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Výška a šířka v pixelech</p></li>
+<li><p>Datový typ (Byte, UInt16, Int16, UInt32, Int32, UInt64, Int64, Float32, Float64, …)</p></li>
+<li><p>Velikost bloku</p></li>
+<li><p>Metadata, popis</p></li>
+<li><p>NODATA_VALUES</p></li>
+<li><p><cite>STATISICS_*</cite></p></li>
+<li><p>Tabulka barev</p></li>
+<li><p>…</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="prehledy-overviews">
+<h3>Přehledy (Overviews)<a class="headerlink" href="#prehledy-overviews" title="Permalink to this heading">¶</a></h3>
+<p>Každý přehled je prepresentován jedním <cite>Kanálem</cite>. Jeho velikost bude různá - v závislosti na rozlišení pixelu.</p>
+</section>
+</section>
+<section id="podporovane-formaty">
+<h2>Podporované formáty<a class="headerlink" href="#podporovane-formaty" title="Permalink to this heading">¶</a></h2>
+<p>GDAL podporuje více než <a class="reference external" href="https://gdal.org/drivers/raster/index.html">170 rastrových formátů</a>. Ne všechny jsou zakompilované do verze knihovny na vašem počítači (běžně je nainstalována podpora pro cca 150 formátů).</p>
+<p>Spolu s knihovnou se nainstaluje do systému celá řada užitečných programů, některé z nich proberem podrobněji. Jejich úplný seznam najdete na <a class="reference external" href="https://gdal.org/programs/index.html">https://gdal.org/programs/index.html</a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gdalinfo.html">gdalinfo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gdalinfo.html#gdalinfo-stats">gdalinfo -stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdalinfo.html#gdalinfo-hist">gdalinfo -hist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdalinfo.html#gdalinfo-json">gdalinfo -json</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gdalwarp.html">gdalwarp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gdalwarp.html#zmena-formatu">Změna formátu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdalwarp.html#transformace-souradnicoveho-systemu">Transformace souřadnicového systému</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdalwarp.html#vyrez-z-rastru-pomoci-hranicnich-souradnic">Výřez z rastru pomocí hraničních souřadnic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdalwarp.html#zmena-rozlisni-velikosti-interpolace">Změna rozlišní, velikosti, interpolace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdalwarp.html#orez-pomoci-vektorove-vrstvy">Ořez pomocí vektorové vrstvy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdalwarp.html#nastaveni-hodnoty-nodata">Nastavení hodnoty NODATA</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gdal_translate.html">gdal_translate</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gdal_translate.html#vyrez-pomoci-okna-pixelu">Výřez pomocí okna pixelů</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gdaladdo.html">gdaladdo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdaltindex.html">gdaltindex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdal_contour.html">gdal_contour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdaldem.html">gdaldem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdal_merge.html">gdal_merge.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdalmanage.html">gdalmanage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gdal_rasterize.html">gdal_rasterize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gtiff.html">Parametry specifické pro formát GeoTIFF a COG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gtiff.html#nastaveni-komprese-formatu-geotiff">Nastavení komprese formátu GeoTIFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gtiff.html#block-window">Block Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gtiff.html#velky-tiff">Velký TIFF</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vrt.html">Virtual Raster format - VRT</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="vrt.html#transformace-souradnicoveho-systemu">Transformace souřadnicového systému</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vrt.html#spojeni-vice-souboru-do-jednoho-gdalbuildvrt">Spojení více souborů do jednoho - gdalbuildvrt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vrt.html#vlozeni-kodu-python-do-vrt">Vložení kódu Python do VRT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="virtual_filesystems.html">Virtuální souborové systémy</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Rastrová data - GDAL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#rastrovy-datovy-model">Rastrový datový model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ogr/index.html">Vektorová data - OGR</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../intro/index.html" title="Úvod do knihovny GDAL"
+              >předchozí</a> |
+            <a href="gdalinfo.html" title="gdalinfo"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

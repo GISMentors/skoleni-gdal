@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>gdalinfo &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="gdalwarp" href="gdalwarp.html" />
+    <link rel="prev" title="Rastrová data - GDAL" href="index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="Rastrová data - GDAL"
+             accesskey="P">předchozí</a> |
+          <a href="gdalwarp.html" title="gdalwarp"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="gdalinfo">
+<h1>gdalinfo<a class="headerlink" href="#gdalinfo" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://gdal.org/programs/gdalinfo.html">gdalinfo</a> - vypíše informace o rastrovém datasetu</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo [--help-general] [-json] [-mm] [-stats | -approx_stats] [-hist] [-nogcp] [-nomd]
+         [-norat] [-noct] [-nofl] [-checksum] [-proj4]
+         [-listmdd] [-mdd domain|`all`]* [-wkt_format WKT1|WKT2|...]
+         [-sd subdataset] [-oo NAME=VALUE]* [-if format]* datasetname
+</pre></div>
+</div>
+<p>Příklad použití:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo data/T33UWQ_20220907T095549_TCI.jp2
+</pre></div>
+</div>
+<p>Příklad výstupu:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Driver: JP2OpenJPEG/JPEG-2000 driver based on OpenJPEG library
+Files: data/T33UWQ_20220907T095549_TCI.jp2
+Size is 10980, 10980
+Coordinate System is:
+PROJCRS[&quot;WGS 84 / UTM zone 33N&quot;,
+    BASEGEOGCRS[&quot;WGS 84&quot;,
+        ENSEMBLE[&quot;World Geodetic System 1984 ensemble&quot;,
+            MEMBER[&quot;World Geodetic System 1984 (Transit)&quot;],
+            MEMBER[&quot;World Geodetic System 1984 (G730)&quot;],
+            MEMBER[&quot;World Geodetic System 1984 (G873)&quot;],
+            MEMBER[&quot;World Geodetic System 1984 (G1150)&quot;],
+            MEMBER[&quot;World Geodetic System 1984 (G1674)&quot;],
+            MEMBER[&quot;World Geodetic System 1984 (G1762)&quot;],
+            MEMBER[&quot;World Geodetic System 1984 (G2139)&quot;],
+            ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
+                LENGTHUNIT[&quot;metre&quot;,1]],
+            ENSEMBLEACCURACY[2.0]],
+        PRIMEM[&quot;Greenwich&quot;,0,
+            ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+        ID[&quot;EPSG&quot;,4326]],
+    CONVERSION[&quot;UTM zone 33N&quot;,
+        METHOD[&quot;Transverse Mercator&quot;,
+            ID[&quot;EPSG&quot;,9807]],
+        PARAMETER[&quot;Latitude of natural origin&quot;,0,
+            ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+            ID[&quot;EPSG&quot;,8801]],
+        PARAMETER[&quot;Longitude of natural origin&quot;,15,
+            ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+            ID[&quot;EPSG&quot;,8802]],
+        PARAMETER[&quot;Scale factor at natural origin&quot;,0.9996,
+            SCALEUNIT[&quot;unity&quot;,1],
+            ID[&quot;EPSG&quot;,8805]],
+        PARAMETER[&quot;False easting&quot;,500000,
+            LENGTHUNIT[&quot;metre&quot;,1],
+            ID[&quot;EPSG&quot;,8806]],
+        PARAMETER[&quot;False northing&quot;,0,
+            LENGTHUNIT[&quot;metre&quot;,1],
+            ID[&quot;EPSG&quot;,8807]]],
+    CS[Cartesian,2],
+        AXIS[&quot;(E)&quot;,east,
+            ORDER[1],
+            LENGTHUNIT[&quot;metre&quot;,1]],
+        AXIS[&quot;(N)&quot;,north,
+            ORDER[2],
+            LENGTHUNIT[&quot;metre&quot;,1]],
+    USAGE[
+        SCOPE[&quot;Engineering survey, topographic mapping.&quot;],
+        AREA[&quot;Between 12°E and 18°E, northern hemisphere between equator and 84°N, onshore and offshore. Austria. Bosnia and Herzegovina. Cameroon. Central African Republic. Chad. Congo. Croatia. Czechia. Democratic Republic of the Congo (Zaire). Gabon. Germany. Hungary. Italy. Libya. Malta. Niger. Nigeria. Norway. Poland. San Marino. Slovakia. Slovenia. Svalbard. Sweden. Vatican City State.&quot;],
+        BBOX[0,12,84,18]],
+    ID[&quot;EPSG&quot;,32633]]
+Data axis to CRS axis mapping: 1,2
+Origin = (499980.000000000000000,5500020.000000000000000)
+Pixel Size = (10.000000000000000,-10.000000000000000)
+Image Structure Metadata:
+  INTERLEAVE=PIXEL
+Corner Coordinates:
+Upper Left  (  499980.000, 5500020.000) ( 14d59&#39;59.00&quot;E, 49d39&#39; 9.80&quot;N)
+Lower Left  (  499980.000, 5390220.000) ( 14d59&#39;59.02&quot;E, 48d39&#39;54.11&quot;N)
+Upper Right (  609780.000, 5500020.000) ( 16d31&#39;14.14&quot;E, 49d38&#39;33.85&quot;N)
+Lower Right (  609780.000, 5390220.000) ( 16d29&#39;26.41&quot;E, 48d39&#39;19.39&quot;N)
+Center      (  554880.000, 5445120.000) ( 15d45&#39; 9.65&quot;E, 49d 9&#39;23.20&quot;N)
+Band 1 Block=256x256 Type=Byte, ColorInterp=Red
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687
+  Overviews: arbitrary
+  Image Structure Metadata:
+    COMPRESSION=JPEG2000
+Band 2 Block=256x256 Type=Byte, ColorInterp=Green
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687
+  Overviews: arbitrary
+  Image Structure Metadata:
+    COMPRESSION=JPEG2000
+Band 3 Block=256x256 Type=Byte, ColorInterp=Blue
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687
+  Overviews: arbitrary
+  Image Structure Metadata:
+    COMPRESSION=JPEG2000
+</pre></div>
+</div>
+<p>Ve výpisu můžeme najít informace:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Název datového zdroje, jeho formát</p></li>
+<li><p>Informace o projekci</p></li>
+<li><p>Oblast, kterou data pokrývají</p></li>
+<li><p>Rozlišení pixelu</p></li>
+<li><p>Informace o kanálech a nebo overviews (přehledech)</p></li>
+</ul>
+</div></blockquote>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Kolik kanálů datový zdroj obsahuje?</p>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Jaké je rozlišení rastru?</p>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>V jakém souřadnicové systému je datový soubor?</p>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Jaký je formát rastrového souboru, jakou používá kompresi?</p>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Porovnejte výpis se souborem v blízkém infračerveném spektru</p>
+<p>gdalinfo data/T33UWQ_20220907T095549_B08.jp2</p>
+</div>
+<section id="gdalinfo-stats">
+<h2>gdalinfo -stats<a class="headerlink" href="#gdalinfo-stats" title="Permalink to this heading">¶</a></h2>
+<p>Parametr <code class="docutils literal notranslate"><span class="pre">-stats</span></code> provede výpočet základních statistik rastrového souboru. Pokud to formát umožňuje, uloží je pro příští použití. Pokud to formát neumožňuje, vytvoří speciální metadatový soubor s příponou <code class="docutils literal notranslate"><span class="pre">.aux.xml</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo -stats data/T33UWQ_20220907T095549_TCI.jp2
+</pre></div>
+</div>
+<p>Výpočet trvá déle, statistika se zpracovává pro všechny kanály.</p>
+<p>Příklad výstupu:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[...]
+
+Band 1 Block=256x256 Type=Byte, ColorInterp=Red
+  Minimum=0.000, Maximum=255.000, Mean=59.435, StdDev=32.406
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687
+  Overviews: arbitrary
+  Metadata:
+    STATISTICS_MAXIMUM=255
+    STATISTICS_MEAN=59.434880906168
+    STATISTICS_MINIMUM=0
+    STATISTICS_STDDEV=32.40620283593
+    STATISTICS_VALID_PERCENT=100
+  Image Structure Metadata:
+    COMPRESSION=JPEG2000
+Band 2 Block=256x256 Type=Byte, ColorInterp=Green
+  Minimum=1.000, Maximum=255.000, Mean=69.111, StdDev=22.082
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687
+  Overviews: arbitrary
+  Metadata:
+    STATISTICS_MAXIMUM=255
+    STATISTICS_MEAN=69.110535623638
+    STATISTICS_MINIMUM=1
+    STATISTICS_STDDEV=22.082178859328
+    STATISTICS_VALID_PERCENT=100
+  Image Structure Metadata:
+    COMPRESSION=JPEG2000
+Band 3 Block=256x256 Type=Byte, ColorInterp=Blue
+  Minimum=0.000, Maximum=255.000, Mean=73.839, StdDev=17.678
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687
+  Overviews: arbitrary
+  Metadata:
+    STATISTICS_MAXIMUM=255
+    STATISTICS_MEAN=73.838878329866
+    STATISTICS_MINIMUM=0
+    STATISTICS_STDDEV=17.678142817323
+    STATISTICS_VALID_PERCENT=100
+  Image Structure Metadata:
+    COMPRESSION=JPEG2000
+</pre></div>
+</div>
+<p>Na disku vzniknul nový soubor <code class="docutils literal notranslate"><span class="pre">data/T33UWQ_20220907T095549_TCI.jp2.aux.xml</span></code></p>
+</section>
+<section id="gdalinfo-hist">
+<h2>gdalinfo -hist<a class="headerlink" href="#gdalinfo-hist" title="Permalink to this heading">¶</a></h2>
+<p>Parametr <code class="docutils literal notranslate"><span class="pre">-hist</span></code> vypíše tabulku výskytů jednotlivých kategorií pro možnost vykreslení histogramu</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo -hist data/T33UWQ_20220907T095549_B08.jp2
+</pre></div>
+</div>
+<p>Příklad výstupu:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[...]
+
+256 buckets from 579.969 to 8276.03:
+0 0 1 0 0 1 0 0 1 0 0 0 0 0 0 0 1 1 0 1 1 8428 24437 56401 53731 56247 74499 81653 79604 79965 78112 69240 67644 59171 56711 56247 54882 56177 57549 60929 64475 71049 79493 88519 101375 119590 141644 162705 189296 207828 236952 269722 308810 351060 393979 440867 496009 554174 612793 673703 732310 790614 846015 903133 989726 1010958 1059956 1113375 1168598 1229195 1285554 1351145 1420770 1498909 1583723 1668619 1749671 1833678 1904475 1968203 2093270 2066687 2100146 2120025 2133360 2140404 2150282 2157996 2163356 2164500 2169802 2175141 2181199 2183278 2179269 2173487 2226387 2135036 2110848 2070850 2035970 1988539 1943975 1892383 1832933 1774318 1719171 1660722 1595008 1532286 1471973 1407072 1387964 1276859 1217222 1151069 1094475 1037440 982320 931935 881482 833494 786939 742827 700823 660809 621171 585484 567164 514574 483225 452426 423775 394959 370056 345944 322196 302255 280382 261592 243568 227764 213381 207015 187404 176561 165012 156262 146643 138848 131045 124348 118376 111220 106034 100592 95664 90482 86125 84109 77797 74307 70906 67680 63995 60693 57739 54622 51515 48745 46018 43566 40716 38365 36133 35307 32717 30623 29410 28596 26726 25641 24217 22637 21647 20215 19263 18205 16853 16067 14783 13846 12509 11639 10795 9791 9123 8534 7974 7368 6984 6650 6059 5885 5741 5384 5045 4849 4329 3876 3768 3357 3337 3216 3056 2807 2710 2634 2405 2375 2360 2319 2269 2201 2196 2170 2103 2071 2102 1951 1903 1860 1786 1835 1777 1787 1738 1722 1617 1651 1524 1574 1503 1483 1436 1389 1394 1368 1375 1304 1218 1201 1130 1228 1148 33666
+[...]
+</pre></div>
+</div>
+</section>
+<section id="gdalinfo-json">
+<h2>gdalinfo -json<a class="headerlink" href="#gdalinfo-json" title="Permalink to this heading">¶</a></h2>
+<p>Parametr <code class="docutils literal notranslate"><span class="pre">-json</span></code> dá stejný výstup, ale místo špatně zpracovatelného textového formátu bude výstup ve formátu JSON</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo -json data/T33UWQ_20220907T095549_B08.jp2
+</pre></div>
+</div>
+<p>Příklad výstupu:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
+  &quot;description&quot;:&quot;data/T33UWQ_20220907T095549_B08.jp2&quot;,
+  &quot;driverShortName&quot;:&quot;JP2OpenJPEG&quot;,
+  &quot;driverLongName&quot;:&quot;JPEG-2000 driver based on OpenJPEG library&quot;,
+  &quot;files&quot;:[
+    &quot;data/T33UWQ_20220907T095549_B08.jp2&quot;,
+    &quot;data/T33UWQ_20220907T095549_B08.jp2.aux.xml&quot;
+  ],
+  &quot;size&quot;:[
+    10980,
+    10980
+  ],
+  &quot;coordinateSystem&quot;:{
+    &quot;wkt&quot;:&quot;PROJCRS[\&quot;WGS 84 / UTM zone 33N\&quot;,\n    BASEGEOGCRS[\&quot;WGS 84\&quot;,\n        ENSEMBLE[\&quot;World Geodetic System 1984 ensemble\&quot;,\n            MEMBER[\&quot;World Geodetic System 1984 (Transit)\&quot;],\n            MEMBER[\&quot;World Geodetic System 1984 (G730)\&quot;],\n            MEMBER[\&quot;World Geodetic System 1984 (G873)\&quot;],\n            MEMBER[\&quot;World Geodetic System 1984 (G1150)\&quot;],\n            MEMBER[\&quot;World Geodetic System 1984 (G1674)\&quot;],\n            MEMBER[\&quot;World Geodetic System 1984 (G1762)\&quot;],\n            MEMBER[\&quot;World Geodetic System 1984 (G2139)\&quot;],\n            ELLIPSOID[\&quot;WGS 84\&quot;,6378137,298.257223563,\n                LENGTHUNIT[\&quot;metre\&quot;,1]],\n            ENSEMBLEACCURACY[2.0]],\n        PRIMEM[\&quot;Greenwich\&quot;,0,\n            ANGLEUNIT[\&quot;degree\&quot;,0.0174532925199433]],\n        ID[\&quot;EPSG\&quot;,4326]],\n    CONVERSION[\&quot;UTM zone 33N\&quot;,\n        METHOD[\&quot;Transverse Mercator\&quot;,\n            ID[\&quot;EPSG\&quot;,9807]],\n        PARAMETER[\&quot;Latitude of natural origin\&quot;,0,\n            ANGLEUNIT[\&quot;degree\&quot;,0.0174532925199433],\n            ID[\&quot;EPSG\&quot;,8801]],\n        PARAMETER[\&quot;Longitude of natural origin\&quot;,15,\n            ANGLEUNIT[\&quot;degree\&quot;,0.0174532925199433],\n            ID[\&quot;EPSG\&quot;,8802]],\n        PARAMETER[\&quot;Scale factor at natural origin\&quot;,0.9996,\n            SCALEUNIT[\&quot;unity\&quot;,1],\n            ID[\&quot;EPSG\&quot;,8805]],\n        PARAMETER[\&quot;False easting\&quot;,500000,\n            LENGTHUNIT[\&quot;metre\&quot;,1],\n            ID[\&quot;EPSG\&quot;,8806]],\n        PARAMETER[\&quot;False northing\&quot;,0,\n            LENGTHUNIT[\&quot;metre\&quot;,1],\n            ID[\&quot;EPSG\&quot;,8807]]],\n    CS[Cartesian,2],\n        AXIS[\&quot;(E)\&quot;,east,\n            ORDER[1],\n            LENGTHUNIT[\&quot;metre\&quot;,1]],\n        AXIS[\&quot;(N)\&quot;,north,\n            ORDER[2],\n            LENGTHUNIT[\&quot;metre\&quot;,1]],\n    USAGE[\n        SCOPE[\&quot;Engineering survey, topographic mapping.\&quot;],\n        AREA[\&quot;Between 12°E and 18°E, northern hemisphere between equator and 84°N, onshore and offshore. Austria. Bosnia and Herzegovina. Cameroon. Central African Republic. Chad. Congo. Croatia. Czechia. Democratic Republic of the Congo (Zaire). Gabon. Germany. Hungary. Italy. Libya. Malta. Niger. Nigeria. Norway. Poland. San Marino. Slovakia. Slovenia. Svalbard. Sweden. Vatican City State.\&quot;],\n        BBOX[0,12,84,18]],\n    ID[\&quot;EPSG\&quot;,32633]]&quot;,
+    &quot;dataAxisToSRSAxisMapping&quot;:[
+      1,
+      2
+    ]
+  },
+  &quot;geoTransform&quot;:[
+    499980.0,
+    10.0,
+    0.0,
+    5500020.0,
+    0.0,
+    -10.0
+  ],
+  &quot;metadata&quot;:{
+  },
+
+[...]
+}
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rastrová data - GDAL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#rastrovy-datovy-model">Rastrový datový model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ogr/index.html">Vektorová data - OGR</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="Rastrová data - GDAL"
+              >předchozí</a> |
+            <a href="gdalwarp.html" title="gdalwarp"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

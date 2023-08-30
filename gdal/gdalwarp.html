@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>gdalwarp &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="gdal_translate" href="gdal_translate.html" />
+    <link rel="prev" title="gdalinfo" href="gdalinfo.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="gdalinfo.html" title="gdalinfo"
+             accesskey="P">předchozí</a> |
+          <a href="gdal_translate.html" title="gdal_translate"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="gdalwarp">
+<h1>gdalwarp<a class="headerlink" href="#gdalwarp" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://gdal.org/programs/gdalwarp.html">gdalwarp</a> - transformuje rastrové soubory do různých formátů, pomáhá s tvorbou výřezů, změna rozlišení, atd.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Usage: gdalwarp [--help-general] [--formats]
+    [-s_srs srs_def] [-t_srs srs_def] [-to &quot;NAME=VALUE&quot;]* [-vshift | -novshift]
+    [[-s_coord_epoch epoch] | [-t_coord_epoch epoch]]
+    [-order n | -tps | -rpc | -geoloc] [-et err_threshold]
+    [-refine_gcps tolerance [minimum_gcps]]
+    [-te xmin ymin xmax ymax] [-tr xres yres] [-tap] [-ts width height]
+    [-ovr level|AUTO|AUTO-n|NONE] [-wo &quot;NAME=VALUE&quot;] [-ot Byte/Int16/...] [-wt Byte/Int16]
+    [-srcnodata &quot;value [value...]&quot;] [-dstnodata &quot;value [value...]&quot;] -dstalpha
+    [-r resampling_method] [-wm memory_in_mb] [-multi] [-q]
+    [-cutline datasource] [-cl layer] [-cwhere expression]
+    [-csql statement] [-cblend dist_in_pixels] [-crop_to_cutline]
+    [-if format]* [-of format] [-co &quot;NAME=VALUE&quot;]* [-overwrite]
+    [-nomd] [-cvmd meta_conflict_value] [-setci] [-oo NAME=VALUE]*
+    [-doo NAME=VALUE]*
+    srcfile* dstfile
+
+Available resampling methods:
+    near (default), bilinear, cubic, cubicspline, lanczos, average, rms,
+    mode,  max, min, med, Q1, Q3, sum.
+</pre></div>
+</div>
+<p>Příklad použití:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp _data/T33UWQ_20220907T095549_TCI.jp2 _data/T33UWQ_20220907T095549_TCI.tiff
+</pre></div>
+</div>
+<p>Příklad výstupu:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Creating output file that is 10980P x 10980L.
+Processing _data/T33UWQ_20220907T095549_TCI.jp2 [1/1] : 0...10...20...30...40...50...60...70...80...90...100 - done.
+</pre></div>
+</div>
+<p>Výstupní soubor není jinak komprimovaný a je uložený ve formátu GeoTIFF</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo _data/T33UWQ_20220907T095549_TCI.tiff
+
+Driver: GTiff/GeoTIFF
+Files: _data/T33UWQ_20220907T095549_TCI.tiff
+[...]
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">129M</span> <span class="pre">T33UWQ_20220907T095549_TCI.jp2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">345M</span> <span class="pre">T33UWQ_20220907T095549_TCI.tiff</span></code></p></li>
+</ul>
+<section id="zmena-formatu">
+<h2>Změna formátu<a class="headerlink" href="#zmena-formatu" title="Permalink to this heading">¶</a></h2>
+<p>Většinou stačí použít správnou koncovku souboru (<code class="docutils literal notranslate"><span class="pre">.tiff</span></code>, <code class="docutils literal notranslate"><span class="pre">jp2</span></code>, …). Formát souboru můžete vynutit parametrem <code class="docutils literal notranslate"><span class="pre">-of</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -of GTiff _data/T33UWQ_20220907T095549_B02.jp2 _data/T33UWQ_20220907T095549_B02.tiff
+</pre></div>
+</div>
+</section>
+<section id="transformace-souradnicoveho-systemu">
+<h2>Transformace souřadnicového systému<a class="headerlink" href="#transformace-souradnicoveho-systemu" title="Permalink to this heading">¶</a></h2>
+<p>Pro přiřazení zdrojového souřadnicového systému (pokud není známý), použijte parametr <code class="docutils literal notranslate"><span class="pre">-s_srs</span></code>.</p>
+<p>Pro cílový systém použijte parametr <code class="docutils literal notranslate"><span class="pre">-t_srs</span></code>. Můžete využít zápis pomocí <code class="docutils literal notranslate"><span class="pre">EPSG:číslo</span></code>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -t_srs epsg:3857 _data/T33UWQ_20220907T095549_B02.jp2 _data/T33UWQ_20220907T095549_B02-mercator.tiff
+</pre></div>
+</div>
+</section>
+<section id="vyrez-z-rastru-pomoci-hranicnich-souradnic">
+<h2>Výřez z rastru pomocí hraničních souřadnic<a class="headerlink" href="#vyrez-z-rastru-pomoci-hranicnich-souradnic" title="Permalink to this heading">¶</a></h2>
+<p>Výřez zájmové oblasti lze získat parametrem  <code class="docutils literal notranslate"><span class="pre">-te</span> <span class="pre">minx</span> <span class="pre">miny</span> <span class="pre">maxx</span> <span class="pre">maxy</span></code> (target extent). Souřadnice jsou v cílovém souřadnicovém systému.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733  _data/T33UWQ_20220907T095549_B02.jp2 _data/T33UWQ_20220907T095549_B02-krovak-jihlava.tiff
+</pre></div>
+</div>
+</section>
+<section id="zmena-rozlisni-velikosti-interpolace">
+<h2>Změna rozlišní, velikosti, interpolace<a class="headerlink" href="#zmena-rozlisni-velikosti-interpolace" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Pro změnu rozlišení rastru slouží parametr <code class="docutils literal notranslate"><span class="pre">-tr</span> <span class="pre">xres</span> <span class="pre">yres</span></code> (target resolution).</p></li>
+<li><p>Pro změnu velikosti rastru (nepřímo tedy rozlišení) parametr <code class="docutils literal notranslate"><span class="pre">-ts</span> <span class="pre">xsize</span> <span class="pre">ysize</span></code> (target size).</p></li>
+</ul>
+<dl class="simple">
+<dt>Ve výchozím nastavení se využívá metoda nejbližšího souseda. Vybrat jiný způsob lze za použití parametru <code class="docutils literal notranslate"><span class="pre">-r</span></code> (resampling) a na výběr máme z metod</dt><dd><ul class="simple">
+<li><p>nearest</p></li>
+<li><p>bilinear</p></li>
+<li><p>cubic</p></li>
+<li><p>cubicspline</p></li>
+<li><p>lanczos</p></li>
+<li><p>average</p></li>
+<li><p>mode</p></li>
+</ul>
+</dd>
+</dl>
+<p>Důležitý je také přepínač <code class="docutils literal notranslate"><span class="pre">-tap</span></code> (target aligned pixels) - hraniční souřadnice  výstupního souboru jsou přizpůsobeny požadovanému rozlišení (<code class="docutils literal notranslate"><span class="pre">-tr</span></code>). Přizpůsobení znamená, že poměry xmin/resx, ymin/resy, xmax/resx a ymax/resy jsou celá čísla.</p>
+<p><strong>Příklad:</strong></p>
+<p>Digitální model terénu zájmové oblasti:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif
+[...]
+</pre></div>
+</div>
+<p>Převod na S-JTSK, region Jihlava, v požadovaném rozlišení:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733 -tr 80 80 _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava.tiff
+
+gdalinfo _data/dem-krovak-jihlava.tiff
+[...]
+Pixel Size = (80.000000000000000,-80.000000000000000)
+</pre></div>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Porovnejte požadovaný extent <code class="docutils literal notranslate"><span class="pre">-te</span></code> s výstupem z <code class="docutils literal notranslate"><span class="pre">gdalinfo</span></code> - odpovídají hraniční souřadnice?</p>
+</div>
+<p>Využití parametru <code class="docutils literal notranslate"><span class="pre">-tap</span></code> pro přesné „zaříznutí“ okrajů.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733 -tr 80 80 _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava-tap.tiff
+</pre></div>
+</div>
+<p>Převzorkování na 2x lepší rozlišení</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -t_srs epsg:5514 -te -674104 -1132755 -664471 -1125733 -tr 40 40 -r cubicspline _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava-40m.tiff
+</pre></div>
+</div>
+</section>
+<section id="orez-pomoci-vektorove-vrstvy">
+<h2>Ořez pomocí vektorové vrstvy<a class="headerlink" href="#orez-pomoci-vektorove-vrstvy" title="Permalink to this heading">¶</a></h2>
+<p>Parametrem <code class="docutils literal notranslate"><span class="pre">-cutline</span></code> můžeme definovat vektorovou vrstvu, která bude použita na ořez rastrových buněk.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -t_srs epsg:5514 -cutline _data/659673/KATASTRALNI_UZEMI_P.shp _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava-cut.tiff
+</pre></div>
+</div>
+<p>Další parametry slouží pro přesnější výběr linie ořezu:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">-cutline_proj</span></code></dt><dd><p>Zadat projekci linie, pokud není definována</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-cl</span></code></dt><dd><p>Pokud je ve vektorovém datovém zdroji více vrstev, lze vybrat tu správnou</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-cwhere</span></code></dt><dd><p>SQL <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> podmínka pro výběr prvků z vektorového datasetu.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-cblend</span></code></dt><dd><p>Rozmazání okrajů výřezu. Dá se použít na prolnutí s jinými daty</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-crop_to_cutline</span></code></dt><dd><p>Ořízne rastrovou mapu na nejmenší obdélník okolo cutline</p>
+</dd>
+</dl>
+</section>
+<section id="nastaveni-hodnoty-nodata">
+<h2>Nastavení hodnoty NODATA<a class="headerlink" href="#nastaveni-hodnoty-nodata" title="Permalink to this heading">¶</a></h2>
+<p>Pro vstupní rastr můžeme hodnotu vynutit, pro výstupní nastavit parametry <code class="docutils literal notranslate"><span class="pre">-srcnodata</span></code> a <code class="docutils literal notranslate"><span class="pre">-dstnodata</span></code></p>
+<p>V našem případě nastavíme hodnotu NODATA na hodnotu -9999, aby při prohlížení nebyl rastr „černý“.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -t_srs epsg:5514 -dstnodata -9999 -cutline _data/659673/KATASTRALNI_UZEMI_P.shp _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/dem-krovak-jihlava-nodata.tiff
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rastrová data - GDAL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#rastrovy-datovy-model">Rastrový datový model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ogr/index.html">Vektorová data - OGR</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="gdalinfo.html" title="gdalinfo"
+              >předchozí</a> |
+            <a href="gdal_translate.html" title="gdal_translate"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

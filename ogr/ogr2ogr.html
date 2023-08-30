@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>ogr2ogr &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="ogrtindex" href="ogrtindex.html" />
+    <link rel="prev" title="ogrinfo" href="ogrinfo.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="ogrinfo.html" title="ogrinfo"
+             accesskey="P">předchozí</a> |
+          <a href="ogrtindex.html" title="ogrtindex"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="ogr2ogr">
+<h1>ogr2ogr<a class="headerlink" href="#ogr2ogr" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://gdal.org/programs/ogr2ogr.html">ogr2ogr</a> - nám pomůže s konverzemi
+mezi formáty.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Usage: ogr2ogr [--help-general] [-skipfailures] [-append] [-update]
+               [-select field_list] [-where restricted_where|@filename]
+               [-progress] [-sql &lt;sql statement&gt;|@filename] [-dialect dialect]
+               [-preserve_fid] [-fid FID] [-limit nb_features]
+               [-spat xmin ymin xmax ymax] [-spat_srs srs_def] [-geomfield field]
+               [-a_srs srs_def] [-t_srs srs_def] [-s_srs srs_def] [-ct string]
+               [-f format_name] [-overwrite] [[-dsco NAME=VALUE] ...]
+               dst_datasource_name src_datasource_name
+               [-lco NAME=VALUE] [-nln name]
+               [-nlt type|PROMOTE_TO_MULTI|CONVERT_TO_LINEAR|CONVERT_TO_CURVE]
+               [-dim XY|XYZ|XYM|XYZM|layer_dim] [layer [layer ...]]
+
+Advanced options :
+               [-gt n] [-ds_transaction]
+               [[-oo NAME=VALUE] ...] [[-doo NAME=VALUE] ...]
+               [-clipsrc [xmin ymin xmax ymax]|WKT|datasource|spat_extent]
+               [-clipsrcsql sql_statement] [-clipsrclayer layer]
+               [-clipsrcwhere expression]
+               [-clipdst [xmin ymin xmax ymax]|WKT|datasource]
+               [-clipdstsql sql_statement] [-clipdstlayer layer]
+               [-clipdstwhere expression]
+               [-wrapdateline][-datelineoffset val]
+               [[-simplify tolerance] | [-segmentize max_dist]]
+               [-makevalid]
+               [-addfields] [-unsetFid] [-emptyStrAsNull]
+               [-relaxedFieldNameMatch] [-forceNullable] [-unsetDefault]
+               [-fieldTypeToString All|(type1[,type2]*)] [-unsetFieldWidth]
+               [-mapFieldType srctype|All=dsttype[,srctype2=dsttype2]*]
+               [-fieldmap identity | index1[,index2]*]
+               [-splitlistfields] [-maxsubfields val]
+               [-resolveDomains]
+               [-explodecollections] [-zfield field_name]
+               [-gcp ungeoref_x ungeoref_y georef_x georef_y [elevation]]* [-order n | -tps]
+               [[-s_coord_epoch epoch] | [-t_coord_epoch epoch] | [-a_coord_epoch epoch]]
+               [-nomd] [-mo &quot;META-TAG=VALUE&quot;]* [-noNativeData]
+
+Note: ogr2ogr --long-usage for full help.
+</pre></div>
+</div>
+<p>Příklad použití:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr _data/katastralni_uzemi.gpkg _data/659673/KATASTRALNI_UZEMI_L.shp
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Poznámka</p>
+<p>Všimněte si: pořadí souborů je obráceně oproti běžně užívanému. Nejprve
+výstupní a nakonec vstupní soubor.</p>
+</div>
+<section id="zakladni-pouziti">
+<h2>Základní použití<a class="headerlink" href="#zakladni-pouziti" title="Permalink to this heading">¶</a></h2>
+<p>Základní použití je převod z jednoho formátu na druhý. Formát může být
+specifikovaný koncovkou souboru, předponou (např. <code class="docutils literal notranslate"><span class="pre">PG:</span></code>) nebo pomocí parametru
+<code class="docutils literal notranslate"><span class="pre">-f</span></code> (output format). Jako první argument se udává výstup a jako poslední
+argument vstup.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -f GPKG _data/katastralni_uzemi.gpkg _data/659673/KATASTRALNI_UZEMI_L.shp
+</pre></div>
+</div>
+<p>Seznam podporovaných formátů samozřejmě získáme pomocí <code class="docutils literal notranslate"><span class="pre">--formats</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr --formats
+</pre></div>
+</div>
+<p>Výstupní (a vstupní) speciality formátů se dočteme v dokumentaci k jednotlivým
+formátům, ať už na webových stránkách <a class="reference external" href="https://gdal.org/drivers/vector/index.html">https://gdal.org/drivers/vector/index.html</a>
+nebo pomocí přepínače <code class="docutils literal notranslate"><span class="pre">--format</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr --format &quot;ESRI Shapefile&quot;
+</pre></div>
+</div>
+<p>Pokud chceme vidět postup zpracování, přidáme přepínač <cite>-progress</cite></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -progress _data/katastralni_uzemi.gpkg _data/659673/KATASTRALNI_UZEMI_L.shp
+</pre></div>
+</div>
+</section>
+<section id="pridani-prvku-vs-jejich-prepsani">
+<h2>Přidání prvků vs. jejich přepsání<a class="headerlink" href="#pridani-prvku-vs-jejich-prepsani" title="Permalink to this heading">¶</a></h2>
+<p>Pomocí přepínačů <code class="docutils literal notranslate"><span class="pre">-apend</span></code> nebo <code class="docutils literal notranslate"><span class="pre">-overwrite</span></code> řídíme, zda se v cílovém datasetu
+bude aktualizovat celá vrstva nebo se pouze přidají další prvky na konec tabulky.</p>
+<p>Celý soubor přepíšeme „natvrdo“ díky přepínači <code class="docutils literal notranslate"><span class="pre">-overwrite</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr _data/jihlava_parcely.gpkg _data/ruian_jihlava.gpkg parcely
+ogr2ogr -append _data/jihlava_parcely.gpkg _data/ruian_polna.gpkg parcely
+ogrinfo _data/jihlava_parcely.gpkg
+</pre></div>
+</div>
+<p>Porovnejte s</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr _data/jihlava_parcely.gpkg _data/ruian_jihlava.gpkg parcely -overwrite
+ogr2ogr -update _data/jihlava_parcely.gpkg _data/ruian_polna.gpkg parcely
+ogrinfo _data/jihlava_parcely.gpkg 57123
+</pre></div>
+</div>
+</section>
+<section id="vyber-atributu-ze-zdrojoveho-souboru">
+<h2>Výběr atributů ze zdrojového souboru<a class="headerlink" href="#vyber-atributu-ze-zdrojoveho-souboru" title="Permalink to this heading">¶</a></h2>
+<p>Výběr atributů můžeme ovlivnit parametrem <code class="docutils literal notranslate"><span class="pre">-select</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -select Id,KmenoveCislo,PododdeleniCisla,VymeraParcely,ZpusobyVyuzitiPozemku,KatastralniUzemiKod _data/jihlava_parcely.gpkg _data/ruian_jihlava.gpkg parcely -overwrite
+ogrinfo _data/jihlava_parcely.gpkg parcely -so
+</pre></div>
+</div>
+</section>
+<section id="vyber-konkretnich-prvku">
+<h2>Výběr konkrétních prvků<a class="headerlink" href="#vyber-konkretnich-prvku" title="Permalink to this heading">¶</a></h2>
+<p>Můžeme vybrat konkrétní provek na základě jeho ID <code class="docutils literal notranslate"><span class="pre">-fid</span></code> (a uložení do
+existujícího souboru, do nové vrstvy)</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -fid 23214 _data/jihlava_parcely.gpkg -nln prior _data/ruian_jihlava.gpkg parcely
+ogrinfo _data/jihlava_parcely.gpkg prior
+</pre></div>
+</div>
+<p>Můžeme omezit maximální počet prvků <code class="docutils literal notranslate"><span class="pre">-limit</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -limit 10 _data/jihlava_parcely.gpkg -nln parcely_10 _data/ruian_jihlava.gpkg parcely
+ogrinfo _data/jihlava_parcely.gpkg parcely_10
+</pre></div>
+</div>
+<p>Můžeme uplatnit SQL podmínku <code class="docutils literal notranslate"><span class="pre">-where</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -where &quot;DruhPozemkuKod=14&quot; _data/jihlava_parcely.gpkg -nln zahrady _data/ruian_jihlava.gpkg parcely
+ogrinfo _data/jihlava_parcely.gpkg zahrady
+</pre></div>
+</div>
+</section>
+<section id="plna-kontrola-nad-vyberem-prvku-pomoci-sql">
+<h2>Plná kontrola nad výběrem prvků pomocí SQL<a class="headerlink" href="#plna-kontrola-nad-vyberem-prvku-pomoci-sql" title="Permalink to this heading">¶</a></h2>
+<p>S parametrem <code class="docutils literal notranslate"><span class="pre">-sql</span></code> můžeme využít veškeré možnosti, které nám tento jazyk
+nabízí</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -sql &quot;SELECT * FROM parcely AS pa INNER JOIN katastralniuzemi AS ku ON pa.KatastralniUzemiKod = ku.Kod WHERE ku.nazev = &#39;Kosov u Jihlavy&#39; AND ST_Area(pa.geom) &gt; 10000&quot; _data/jihlava_parcely.gpkg -nln kosov_1ha _data/ruian_jihlava.gpkg
+</pre></div>
+</div>
+<p>Čitelněji zapsaný SQL výraz:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>SELECT * FROM
+        parcely AS pa
+INNER JOIN
+        katastralniuzemi AS ku
+ON
+        pa.KatastralniUzemiKod = ku.Kod
+WHERE
+        ku.nazev = &#39;Kosov u Jihlavy&#39;
+  AND
+        ST_Area(pa.geom) &gt; 10000&quot;
+</pre></div>
+</div>
+<p>Pomohli jsme si funkcí <code class="docutils literal notranslate"><span class="pre">ST_Area</span></code>, která vypočítá z geometri <code class="docutils literal notranslate"><span class="pre">pa.geom</span></code>
+plochu.</p>
+</section>
+<section id="plosne-vyrezy">
+<h2>Plošné výřezy<a class="headerlink" href="#plosne-vyrezy" title="Permalink to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ogr2ogr</span></code> má značně univerzální možnosti jak plošně limitovat výběr prvků.</p>
+<p>Nejjednodušší je možnost klasického boundingboxu (obálky). Můžeme dokonce
+specifikovat souřadnicový systém, ve kterém je filtr nastavený.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -spat 15.5784 49.3919 15.6013 49.4050 -spat_srs EPSG:4326 _data/jihlava_parcely.gpkg -nln centrum _data/ruian_jihlava.gpkg parcely
+</pre></div>
+</div>
+<p>Můžeme ale také místo výběru geometrie natvrdo oříznout pomocí <code class="docutils literal notranslate"><span class="pre">-clip</span></code></p>
+<p>To může být seznam hodnot <code class="docutils literal notranslate"><span class="pre">minx</span> <span class="pre">miny</span> <span class="pre">maxx,</span> <span class="pre">maxy</span></code> nebo přímo jiný datový zdroj,
+v našem případě natvrdo napsaný WKT (well known text) trojúhelník.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -clipsrc &quot;POLYGON ((-670036 -1130583, -668421 -1130579, -669195 -1129067, -670036 -1130583))&quot; _data/jihlava_parcely.gpkg -nln orez _data/ruian_jihlava.gpkg parcely -nlt MULTIPOLYGON
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Poznámka</p>
+<p>Musíme ještě natvrdo přetypovat typ výstupní geometrie</p>
+</div>
+</section>
+<section id="generalizace-a-segmentace">
+<h2>Generalizace a segmentace<a class="headerlink" href="#generalizace-a-segmentace" title="Permalink to this heading">¶</a></h2>
+<p>Pomocí parametrů <code class="docutils literal notranslate"><span class="pre">-simplify</span></code> a <code class="docutils literal notranslate"><span class="pre">segmentize</span></code> můžeme měnit charakter liniových
+(a plošných) geometrií</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -simplify 200 _data/jihlava_parcely.gpkg -nln ku_simple _data/ruian_jihlava.gpkg katastralniuzemi -nlt MULTIPOLYGON
+</pre></div>
+</div>
+<p>Geometrii lze „zvalidnit“ pomocí <code class="docutils literal notranslate"><span class="pre">-makevalid</span></code>, ale na polygony se musí vzít
+jiný postup.</p>
+</section>
+<section id="zmena-typu-geometrie">
+<h2>Změna typu geometrie<a class="headerlink" href="#zmena-typu-geometrie" title="Permalink to this heading">¶</a></h2>
+<p>Volbu <code class="docutils literal notranslate"><span class="pre">-nlt</span></code> už jsme používali. Na tomto místě jenom zmíníme, že kromě přímo
+datového typu lze ovlivnit, bude-li výstup jako <code class="docutils literal notranslate"><span class="pre">MULTI</span></code>-geometrie, nebo
+například zápis pomocí křivek (u formátů, kde toto lze.</p>
+</section>
+<section id="zmena-souradnicoveho-systemu">
+<h2>Změna souřadnicového systému<a class="headerlink" href="#zmena-souradnicoveho-systemu" title="Permalink to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">-t_srs</span></code> - cílový souřadnicový systém, <code class="docutils literal notranslate"><span class="pre">-s_srs</span></code> zdrojový souřadnicový systém
+- pokud je potřeba (např. Shapefile bez <code class="docutils literal notranslate"><span class="pre">.prj</span></code> souboru).</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -s_srs EPSG:4326 _data/katastralni_uzemi-wgs84.gpkg _data/659673/KATASTRALNI_UZEMI_L.shp
+</pre></div>
+</div>
+<p>nebo komplikovaněji</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -t_srs EPSG:3857 -s_srs &quot;+proj=krovak +lat_0=49.5 +lon_0=24.8333333333333 +alpha=30.2881397527778 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=572.213,85.334,461.94,-4.9732,-1.529,-5.2484,3.5378 +units=m +no_defs +type=crs&quot; _data/katastralni_uzemi-krovak.gpkg _data/659673/KATASTRALNI_UZEMI_L.shp
+</pre></div>
+</div>
+</section>
+<section id="specificke-formaty">
+<h2>Specifické formáty<a class="headerlink" href="#specificke-formaty" title="Permalink to this heading">¶</a></h2>
+<p>Většina formátů má specifické volby pro čtení a zápis, více lze nalézt v
+dokumentaci.</p>
+<section id="ogc-geopackage">
+<h3>OGC GeoPackage<a class="headerlink" href="#ogc-geopackage" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>…</p></li>
+</ul>
+</section>
+<section id="esri-shapefile">
+<h3>ESRI Shapefile<a class="headerlink" href="#esri-shapefile" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Max 2GB</p></li>
+<li><p>Kódování</p></li>
+<li><p>Délka názvů</p></li>
+<li><p>…</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogr2ogr -oo ENCODING=Windows-1250 -lco ENCODING=UTF-8 -lco 2GB_LIMIT=NO -lco SPATIAL_INDEX=YES _data/katastralni_uzemi-utf.shp _data/659673/KATASTRALNI_UZEMI_L.shp
+</pre></div>
+</div>
+</section>
+<section id="csv">
+<h3>CSV<a class="headerlink" href="#csv" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>…</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gdal/index.html">Rastrová data - GDAL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Vektorová data - OGR</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#vektorovy-datovy-model">Vektorový datový model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="ogrinfo.html" title="ogrinfo"
+              >předchozí</a> |
+            <a href="ogrtindex.html" title="ogrtindex"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

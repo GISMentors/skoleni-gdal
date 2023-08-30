@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>ogrtindex &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="prev" title="ogr2ogr" href="ogr2ogr.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="ogr2ogr.html" title="ogr2ogr"
+             accesskey="P">předchozí</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="ogrtindex">
+<h1>ogrtindex<a class="headerlink" href="#ogrtindex" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://gdal.org/programs/ogrtindex.html">ogrtindex</a> - vytvoří prostorový
+index vektorových dat</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Usage: ogrtindex [-lnum n]... [-lname name]... [-f output_format]
+                 [-write_absolute_path] [-skip_different_projection]
+                 [-t_srs target_srs]
+                 [-src_srs_name field_name] [-src_srs_format [AUTO|WKT|EPSG|PROJ]
+                 [-accept_different_schemas]
+                 output_dataset src_dataset...
+
+  -lnum n: Add layer number &#39;n&#39; from each source file
+           in the tile index.
+  -lname name: Add the layer named &#39;name&#39; from each source file
+               in the tile index.
+  -f output_format: Select an output format name.
+  -tileindex field_name: The name to use for the dataset name.
+                         Defaults to LOCATION.
+  -write_absolute_path: Filenames are written with absolute paths.
+  -skip_different_projection: Only layers with same projection ref
+        as layers already inserted in the tileindex will be inserted.
+  -accept_different_schemas: by default ogrtindex checks that all layers inserted
+                             into the index have the same attribute schemas. If you
+                             specify this option, this test will be disabled. Be aware that
+                             resulting index may be incompatible with MapServer!
+  - If -t_srs is specified, geometries of input files will be transformed to the desired
+    target coordinate reference system.
+    Note that using this option generates files that are NOT compatible with MapServer &lt; 7.2.
+  - Simple rectangular polygons are generated in the same coordinate reference system
+    as the vectors, or in target reference system if the -t_srs option is used.
+
+If no -lnum or -lname arguments are given it is assumed that
+all layers in source datasets should be added to the tile index
+as independent records.
+</pre></div>
+</div>
+<p>Příklad použití:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ogrtindex tindex-shp.gpkg _data/*.shp
+</pre></div>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gdal/index.html">Rastrová data - GDAL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Vektorová data - OGR</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#vektorovy-datovy-model">Vektorový datový model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="ogr2ogr.html" title="ogr2ogr"
+              >předchozí</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

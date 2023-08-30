@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Úvod do knihovny GDAL &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="Rastrová data - GDAL" href="../gdal/index.html" />
+    <link rel="prev" title="Obsah" href="../index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../index.html" title="Obsah"
+             accesskey="P">předchozí</a> |
+          <a href="../gdal/index.html" title="Rastrová data - GDAL"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="uvod-do-knihovny-gdal">
+<h1>Úvod do knihovny GDAL<a class="headerlink" href="#uvod-do-knihovny-gdal" title="Permalink to this heading">¶</a></h1>
+<p>GDAL znamená „Geospatial Data Abstraction Library“. Vyslovujeme „gee-doll“ nebo „gee-dall“ nebo „goo-doll“.</p>
+<p>Součástí knihovny GDAL je i knihovan OGR - OpenGIS simple features Reference implementation.</p>
+<p>Pamatujte si:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>gdal*</cite> - rastry</p></li>
+<li><p><cite>ogr*</cite> - vektory</p></li>
+</ul>
+</div></blockquote>
+<section id="prikazy-gdal-ogr">
+<h2>Příkazy GDAL/OGR<a class="headerlink" href="#prikazy-gdal-ogr" title="Permalink to this heading">¶</a></h2>
+<p>Ve vašem systému je nainstalovaná celá řada příkazů odvozených z knihovny GDAL. Ty pro rastrová data začínají předponou <code class="docutils literal notranslate"><span class="pre">gdal</span></code>, ty pro vektory začínají předponou <code class="docutils literal notranslate"><span class="pre">ogr</span></code></p>
+<section id="parametry-prikazu">
+<h3>Parametry příkazů<a class="headerlink" href="#parametry-prikazu" title="Permalink to this heading">¶</a></h3>
+<p>Obecná struktura použití příkazů vypadá následovně:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>příkaz [-parametr [hodnota]] [--obecny_parametr] soubor [výstupní_soubor]
+</pre></div>
+</div>
+<p>Příklad</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo soubor.tif
+
+gdalwarp -te 15 50 16 51 -t_srs epsg:3857 soubor.tiff vystup.tiff
+
+gdal_translate --formats
+</pre></div>
+</div>
+</section>
+<section id="obecne-parametry">
+<h3>Obecné parametry<a class="headerlink" href="#obecne-parametry" title="Permalink to this heading">¶</a></h3>
+<p>Všechny příkazy GDAL mají společnou sadu parametrů, které můžete použít pro získání informace o systému:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--help</span></code></dt><dd><p>Rychlá nápověda</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--version</span></code></dt><dd><p>Verze knihovny GDAL</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--build</span></code></dt><dd><p>Informace o lokální insalaci GDAL</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--formats</span></code></dt><dd><p>Seznam všech formátů podporovaných na daném systému</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--format</span> <span class="pre">&lt;format&gt;</span></code></dt><dd><p>Detailní informace o formátu</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--optfile</span> <span class="pre">&lt;filename&gt;</span></code></dt><dd><p>Soubor, ze kterého se mají načíst další parametry</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">&lt;key&gt;</span> <span class="pre">&lt;value&gt;</span></code></dt><dd><p>Nastavení, které ovlivní běh programů knihovny GDAL</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--debug</span> <span class="pre">&lt;value&gt;</span></code></dt><dd><p>Vypíše více informativní výstup při běhu programů</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--help-general</span></code></dt><dd><p>Dá podrobnější návod k programům</p>
+</dd>
+</dl>
+<p>Příklad použití:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo --help
+gdalinfo --formats
+gdalinfo --format gtiff
+</pre></div>
+</div>
+</section>
+<section id="na-cem-stoji-gdal">
+<h3>Na čem stojí GDAL<a class="headerlink" href="#na-cem-stoji-gdal" title="Permalink to this heading">¶</a></h3>
+<p>GDAL nefunguje jako knihovna sám o sobě, je napojen na celou řadu jiných knihoven zásadních pro GIS.</p>
+<ul class="simple">
+<li><p>Proj4 - pro práci s projekcemi</p></li>
+<li><p>Geos - pro práci s vektorovými daty a řešení topologických úloh</p></li>
+<li><p>SQLite3</p></li>
+<li><p>…</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Úvod do knihovny GDAL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prikazy-gdal-ogr">Příkazy GDAL/OGR</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gdal/index.html">Rastrová data - GDAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ogr/index.html">Vektorová data - OGR</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../index.html" title="Obsah"
+              >předchozí</a> |
+            <a href="../gdal/index.html" title="Rastrová data - GDAL"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

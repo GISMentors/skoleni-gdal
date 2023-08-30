@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Vektorová data - OGR &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="ogrinfo" href="ogrinfo.html" />
+    <link rel="prev" title="Virtuální souborové systémy" href="../gdal/virtual_filesystems.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../gdal/virtual_filesystems.html" title="Virtuální souborové systémy"
+             accesskey="P">předchozí</a> |
+          <a href="ogrinfo.html" title="ogrinfo"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="vektorova-data-ogr">
+<h1>Vektorová data - OGR<a class="headerlink" href="#vektorova-data-ogr" title="Permalink to this heading">¶</a></h1>
+<p>Pro práci s vektorovými geodaty se „tradičně“ používá knihovna OGR (OpenGIS
+Simple Features Reference Implementation) ta je součástí knihovny GDAL. Knihovna
+OGR je nízkoúrovňová, přistupuje k datům pokud možno efektivním způsobem. V
+současnosti knihovna GDAL podporuje více než 100 vektorových GIS formátů.</p>
+<blockquote>
+<div><dl class="simple">
+<dt><strong>Driver</strong></dt><dd><p>ovladač pro čtení a zápis dat</p>
+</dd>
+<dt><strong>Datasource</strong></dt><dd><p>zdroj dat, ze kterého a do kterého se čte a zapisuje (soubor, databáze)</p>
+</dd>
+<dt><strong>Layer</strong></dt><dd><p>tzv. „vrstva“ - konkrétní sada vektorových prvků - tabulka v databázi
+(těch je v jednom datovém zdroji více).</p>
+</dd>
+<dt><strong>Feature</strong></dt><dd><p>vektorový objekt, který nese atributy a geometrii</p>
+</dd>
+</dl>
+</div></blockquote>
+<section id="vektorovy-datovy-model">
+<h2>Vektorový datový model<a class="headerlink" href="#vektorovy-datovy-model" title="Permalink to this heading">¶</a></h2>
+<figure class="align-center">
+<img alt="../_images/ogr-schema.png" class="middle" src="../_images/ogr-schema.png" />
+</figure>
+<section id="datasource">
+<h3>Datasource<a class="headerlink" href="#datasource" title="Permalink to this heading">¶</a></h3>
+<p>Datový zdroj - databáze, soubor.</p>
+</section>
+<section id="layer">
+<h3>Layer<a class="headerlink" href="#layer" title="Permalink to this heading">¶</a></h3>
+<p>V případě souborových formátů je přítomna většinou jedna „vrstva“. Je to
+zbytečná úroveň, ale OGR tím vytváří univerzálně použitelný datový model.</p>
+</section>
+</section>
+<section id="podporovane-formaty">
+<h2>Podporované formáty<a class="headerlink" href="#podporovane-formaty" title="Permalink to this heading">¶</a></h2>
+<p>OGR podporuje více než <a class="reference external" href="https://gdal.org/drivers/vector/index.html">100 vektorových formátů</a>. Ne všechny jsou zakompilované do verze knihovny na vašem počítači (běžně je nainstalována podpora pro cca 90 formátů).</p>
+<p>Spolu s knihovnou se nainstaluje do systému celá řada užitečných programů, některé z nich proberem podrobněji. Jejich úplný seznam najdete na <a class="reference external" href="https://gdal.org/programs/index.html">https://gdal.org/programs/index.html</a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ogrinfo.html">ogrinfo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ogrinfo.html#ogrinfo-so">ogrinfo -so</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogrinfo.html#ogrinfo-al">ogrinfo -al</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogrinfo.html#ogrinfo-geom">ogrinfo -geom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogrinfo.html#ogrinfo-fields">ogrinfo -fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogrinfo.html#ogrinfo-spat">ogrinfo -spat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogrinfo.html#ogrinfo-fid">ogrinfo -fid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogrinfo.html#ogrinfo-where">ogrinfo -where</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogrinfo.html#ogrinfo-sql">ogrinfo -sql</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ogr2ogr.html">ogr2ogr</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#zakladni-pouziti">Základní použití</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#pridani-prvku-vs-jejich-prepsani">Přidání prvků vs. jejich přepsání</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#vyber-atributu-ze-zdrojoveho-souboru">Výběr atributů ze zdrojového souboru</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#vyber-konkretnich-prvku">Výběr konkrétních prvků</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#plna-kontrola-nad-vyberem-prvku-pomoci-sql">Plná kontrola nad výběrem prvků pomocí SQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#plosne-vyrezy">Plošné výřezy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#generalizace-a-segmentace">Generalizace a segmentace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#zmena-typu-geometrie">Změna typu geometrie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#zmena-souradnicoveho-systemu">Změna souřadnicového systému</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ogr2ogr.html#specificke-formaty">Specifické formáty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ogrtindex.html">ogrtindex</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gdal/index.html">Rastrová data - GDAL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Vektorová data - OGR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vektorovy-datovy-model">Vektorový datový model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../gdal/virtual_filesystems.html" title="Virtuální souborové systémy"
+              >předchozí</a> |
+            <a href="ogrinfo.html" title="ogrinfo"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Virtuální souborové systémy &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="Vektorová data - OGR" href="../ogr/index.html" />
+    <link rel="prev" title="Virtual Raster format - VRT" href="vrt.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="vrt.html" title="Virtual Raster format - VRT"
+             accesskey="P">předchozí</a> |
+          <a href="../ogr/index.html" title="Vektorová data - OGR"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="virtualni-souborove-systemy">
+<h1>Virtuální souborové systémy<a class="headerlink" href="#virtualni-souborove-systemy" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://gdal.org/user/virtual_file_systems.html">Virtuální souborové systémy GDAL</a> slouží k tomu, že můžeme pracovat i se zazipovanými soubory nebo soubory uloženými na vzdáleném disku nebo cloudovém uložišti, jako by byly uloženy lokálně.</p>
+<p>Virtuální systémy se píší před název souboru a jdou řetězit.</p>
+<dl class="simple">
+<dt>/vsizip/</dt><dd><p>pro práci se sazipovanými soubory</p>
+</dd>
+<dt>/vsicurl/</dt><dd><p>pro práci přes síť</p>
+</dd>
+<dt>/vsis3_streaming/</dt><dd><p>pro práci se soubory uloženými na Amazon S3 úložišti</p>
+</dd>
+<dt>/vsigs/</dt><dd><p>data uložená na Google Cloudu</p>
+</dd>
+<dt>/vsimem/</dt><dd><p>data uložená v paměti</p>
+</dd>
+</dl>
+<p>A mnoho dalších</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>export AWS_NO_SIGN_REQUEST=YES
+gdalinfo /vsis3_streaming/copernicus-dem-90m/Copernicus_DSM_COG_30_N49_00_E015_00_DEM/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif
+</pre></div>
+</div>
+<p>A výstup</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Driver: GTiff/GeoTIFF
+Files: /vsis3_streaming/copernicus-dem-90m/Copernicus_DSM_COG_30_N49_00_E015_00_DEM/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif
+Size is 1200, 1200
+Coordinate System is:
+GEOGCRS[&quot;WGS 84&quot;,
+    DATUM[&quot;World Geodetic System 1984&quot;,
+        ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
+            LENGTHUNIT[&quot;metre&quot;,1]]],
+    PRIMEM[&quot;Greenwich&quot;,0,
+        ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS[&quot;geodetic latitude (Lat)&quot;,north,
+            ORDER[1],
+            ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+        AXIS[&quot;geodetic longitude (Lon)&quot;,east,
+            ORDER[2],
+            ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+    ID[&quot;EPSG&quot;,4326]]
+Data axis to CRS axis mapping: 2,1
+Origin = (14.999583333333334,50.000416666666666)
+Pixel Size = (0.000833333333333,-0.000833333333333)
+Metadata:
+  AREA_OR_POINT=Point
+Image Structure Metadata:
+  COMPRESSION=DEFLATE
+  INTERLEAVE=BAND
+  LAYOUT=COG
+  PREDICTOR=3
+Corner Coordinates:
+Upper Left  (  14.9995833,  50.0004167) ( 14d59&#39;58.50&quot;E, 50d 0&#39; 1.50&quot;N)
+Lower Left  (  14.9995833,  49.0004167) ( 14d59&#39;58.50&quot;E, 49d 0&#39; 1.50&quot;N)
+Upper Right (  15.9995833,  50.0004167) ( 15d59&#39;58.50&quot;E, 50d 0&#39; 1.50&quot;N)
+Lower Right (  15.9995833,  49.0004167) ( 15d59&#39;58.50&quot;E, 49d 0&#39; 1.50&quot;N)
+Center      (  15.4995833,  49.5004167) ( 15d29&#39;58.50&quot;E, 49d30&#39; 1.50&quot;N)
+Band 1 Block=2048x2048 Type=Float32, ColorInterp=Gray
+  Overviews: 600x600, 300x300
+</pre></div>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rastrová data - GDAL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#rastrovy-datovy-model">Rastrový datový model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ogr/index.html">Vektorová data - OGR</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="vrt.html" title="Virtual Raster format - VRT"
+              >předchozí</a> |
+            <a href="../ogr/index.html" title="Vektorová data - OGR"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

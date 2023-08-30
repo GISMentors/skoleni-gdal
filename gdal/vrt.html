@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Virtual Raster format - VRT &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="Virtuální souborové systémy" href="virtual_filesystems.html" />
+    <link rel="prev" title="Parametry specifické pro formát GeoTIFF a COG" href="gtiff.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="gtiff.html" title="Parametry specifické pro formát GeoTIFF a COG"
+             accesskey="P">předchozí</a> |
+          <a href="virtual_filesystems.html" title="Virtuální souborové systémy"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="virtual-raster-format-vrt">
+<h1>Virtual Raster format - VRT<a class="headerlink" href="#virtual-raster-format-vrt" title="Permalink to this heading">¶</a></h1>
+<p>Mezi mnoha formáty, které podporuje knihovna GDAL má <a class="reference external" href="https://gdal.org/drivers/raster/vrt.html">Virtual rastr driver</a> zvláštní místo. Jedná se soubor XML, kterým můžeme zpracovávat vstupní rastrové soubory za běhu. Soubor tak nezabírá místo. VRT soubory lze řetězit, přidávat do nich kód v jazyce Python a tak podobně.</p>
+<section id="transformace-souradnicoveho-systemu">
+<h2>Transformace souřadnicového systému<a class="headerlink" href="#transformace-souradnicoveho-systemu" title="Permalink to this heading">¶</a></h2>
+<p>Jako první příklad prostě pouze ztransformujeme souřadnicový systém vstupního souboru:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -t_srs epsg:5514 -of VRT _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-krovak.vrt
+
+gdalinfo _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-krovak.vrt
+</pre></div>
+</div>
+<p>Podíváme-li se na VRT soubor blíže, uvidíme, že se jedná o celkem malý soubor XML</p>
+<div class="highlight-XML notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;VRTDataset</span><span class="w"> </span><span class="na">rasterXSize=</span><span class="s">&quot;1093&quot;</span><span class="w"> </span><span class="na">rasterYSize=</span><span class="s">&quot;1524&quot;</span><span class="w"> </span><span class="na">subClass=</span><span class="s">&quot;VRTWarpedDataset&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;SRS</span><span class="w"> </span><span class="na">dataAxisToSRSAxisMapping=</span><span class="s">&quot;1,2&quot;</span><span class="nt">&gt;</span>PROJCS[&quot;S-JTSK<span class="w"> </span>/<span class="w"> </span>Krovak<span class="w"> </span>East<span class="w"> </span>North&quot;,GEOGCS[&quot;S-JTSK&quot;,DATUM[&quot;System_of_the_Unified_Trigonometrical_Cadastral_Network&quot;,SPHEROID[&quot;Bessel<span class="w"> </span>1841&quot;,6377397.155,299.1528128,AUTHORITY[&quot;EPSG&quot;,&quot;7004&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6156&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4156&quot;]],PROJECTION[&quot;Krovak&quot;],PARAMETER[&quot;latitude_of_center&quot;,49.5],PARAMETER[&quot;longitude_of_center&quot;,24.8333333333333],PARAMETER[&quot;azimuth&quot;,30.2881397527778],PARAMETER[&quot;pseudo_standard_parallel_1&quot;,78.5],PARAMETER[&quot;scale_factor&quot;,0.9999],PARAMETER[&quot;false_easting&quot;,0],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;5514&quot;]]<span class="nt">&lt;/SRS&gt;</span>
+<span class="w">  </span><span class="nt">&lt;GeoTransform&gt;</span><span class="w"> </span>-7.1734568408439704e+05,<span class="w">  </span>7.8201966936414763e+01,<span class="w">  </span>0.0000000000000000e+00,<span class="w"> </span>-1.0580974742596082e+06,<span class="w">  </span>0.0000000000000000e+00,<span class="w"> </span>-7.8201966936414763e+01<span class="nt">&lt;/GeoTransform&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Metadata&gt;</span>
+<span class="w">    </span><span class="nt">&lt;MDI</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;AREA_OR_POINT&quot;</span><span class="nt">&gt;</span>Point<span class="nt">&lt;/MDI&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Metadata&gt;</span>
+<span class="w">  </span><span class="nt">&lt;VRTRasterBand</span><span class="w"> </span><span class="na">dataType=</span><span class="s">&quot;Float32&quot;</span><span class="w"> </span><span class="na">band=</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="na">subClass=</span><span class="s">&quot;VRTWarpedRasterBand&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ColorInterp&gt;</span>Gray<span class="nt">&lt;/ColorInterp&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/VRTRasterBand&gt;</span>
+<span class="w">  </span><span class="nt">&lt;BlockXSize&gt;</span>512<span class="nt">&lt;/BlockXSize&gt;</span>
+<span class="w">  </span><span class="nt">&lt;BlockYSize&gt;</span>128<span class="nt">&lt;/BlockYSize&gt;</span>
+<span class="w">  </span><span class="nt">&lt;GDALWarpOptions&gt;</span>
+<span class="w">    </span><span class="nt">&lt;WarpMemoryLimit&gt;</span>6.71089e+07<span class="nt">&lt;/WarpMemoryLimit&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ResampleAlg&gt;</span>NearestNeighbour<span class="nt">&lt;/ResampleAlg&gt;</span>
+<span class="w">    </span><span class="nt">&lt;WorkingDataType&gt;</span>Float32<span class="nt">&lt;/WorkingDataType&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Option</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;INIT_DEST&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/Option&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Option</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ERROR_OUT_IF_EMPTY_SOURCE_WINDOW&quot;</span><span class="nt">&gt;</span>FALSE<span class="nt">&lt;/Option&gt;</span>
+<span class="w">    </span><span class="nt">&lt;SourceDataset</span><span class="w"> </span><span class="na">relativeToVRT=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif<span class="nt">&lt;/SourceDataset&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Transformer&gt;</span>
+<span class="w">      </span><span class="nt">&lt;ApproxTransformer&gt;</span>
+<span class="w">        </span><span class="nt">&lt;MaxError&gt;</span>0.125<span class="nt">&lt;/MaxError&gt;</span>
+<span class="w">        </span><span class="nt">&lt;BaseTransformer&gt;</span>
+<span class="w">          </span><span class="nt">&lt;GenImgProjTransformer&gt;</span>
+<span class="w">            </span><span class="nt">&lt;SrcGeoTransform&gt;</span>14.9995833333333337,0.000833333333333333387,0,50.0004166666666663,0,-0.000833333333333333387<span class="nt">&lt;/SrcGeoTransform&gt;</span>
+<span class="w">            </span><span class="nt">&lt;SrcInvGeoTransform&gt;</span>-17999.5,1200,0,60000.4999999999927,0,-1200<span class="nt">&lt;/SrcInvGeoTransform&gt;</span>
+<span class="w">            </span><span class="nt">&lt;DstGeoTransform&gt;</span>-717345.684084397042,78.2019669364147632,0,-1058097.47425960819,0,-78.2019669364147632<span class="nt">&lt;/DstGeoTransform&gt;</span>
+<span class="w">            </span><span class="nt">&lt;DstInvGeoTransform&gt;</span>9172.98774169789976,0.012787402148248906,0,-13530.3179154040554,0,-0.012787402148248906<span class="nt">&lt;/DstInvGeoTransform&gt;</span>
+<span class="w">            </span><span class="nt">&lt;ReprojectTransformer&gt;</span>
+<span class="w">              </span><span class="nt">&lt;ReprojectionTransformer&gt;</span>
+<span class="w">                </span><span class="nt">&lt;SourceSRS&gt;</span>GEOGCS[&quot;WGS<span class="w"> </span>84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS<span class="w"> </span>84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AXIS[&quot;Latitude&quot;,NORTH],AXIS[&quot;Longitude&quot;,EAST],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]]<span class="nt">&lt;/SourceSRS&gt;</span>
+<span class="w">                </span><span class="nt">&lt;TargetSRS&gt;</span>PROJCS[&quot;S-JTSK<span class="w"> </span>/<span class="w"> </span>Krovak<span class="w"> </span>East<span class="w"> </span>North&quot;,GEOGCS[&quot;S-JTSK&quot;,DATUM[&quot;System_of_the_Unified_Trigonometrical_Cadastral_Network&quot;,SPHEROID[&quot;Bessel<span class="w"> </span>1841&quot;,6377397.155,299.1528128,AUTHORITY[&quot;EPSG&quot;,&quot;7004&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6156&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4156&quot;]],PROJECTION[&quot;Krovak&quot;],PARAMETER[&quot;latitude_of_center&quot;,49.5],PARAMETER[&quot;longitude_of_center&quot;,24.8333333333333],PARAMETER[&quot;azimuth&quot;,30.2881397527778],PARAMETER[&quot;pseudo_standard_parallel_1&quot;,78.5],PARAMETER[&quot;scale_factor&quot;,0.9999],PARAMETER[&quot;false_easting&quot;,0],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;5514&quot;]]<span class="nt">&lt;/TargetSRS&gt;</span>
+<span class="w">                </span><span class="nt">&lt;Options&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;Option</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;CENTER_LONG&quot;</span><span class="nt">&gt;</span>15.4996<span class="nt">&lt;/Option&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;Option</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;AREA_OF_INTEREST&quot;</span><span class="nt">&gt;</span>14.99958333333333,49.00041666666667,15.99958333333333,50.00041666666667<span class="nt">&lt;/Option&gt;</span>
+<span class="w">                </span><span class="nt">&lt;/Options&gt;</span>
+<span class="w">              </span><span class="nt">&lt;/ReprojectionTransformer&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/ReprojectTransformer&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/GenImgProjTransformer&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/BaseTransformer&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/ApproxTransformer&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Transformer&gt;</span>
+<span class="w">    </span><span class="nt">&lt;BandList&gt;</span>
+<span class="w">      </span><span class="nt">&lt;BandMapping</span><span class="w"> </span><span class="na">src=</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="na">dst=</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/BandList&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/GDALWarpOptions&gt;</span>
+<span class="nt">&lt;/VRTDataset&gt;</span>
+</pre></div>
+</div>
+<p>Soubor lze bez problému načíst do QGIS a zobrazit.</p>
+<p>Výhodou je malá velikost. Nevýhodou pomalejší zpracování</p>
+</section>
+<section id="spojeni-vice-souboru-do-jednoho-gdalbuildvrt">
+<h2>Spojení více souborů do jednoho - gdalbuildvrt<a class="headerlink" href="#spojeni-vice-souboru-do-jednoho-gdalbuildvrt" title="Permalink to this heading">¶</a></h2>
+<p>Pomocí <code class="docutils literal notranslate"><span class="pre">gdalbuildvrt</span></code> můžeme spojit více souborů do jednoho</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> gdalbuildvrt _data/dem.vrt _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif _data/Copernicus_DSM_COG_30_N50_00_E015_00_DEM.tif
+
+gdalinfo _data/dem.vrt
+</pre></div>
+</div>
+</section>
+<section id="vlozeni-kodu-python-do-vrt">
+<h2>Vložení kódu Python do VRT<a class="headerlink" href="#vlozeni-kodu-python-do-vrt" title="Permalink to this heading">¶</a></h2>
+<p>Do VRT souboru lze přímo vložit kód v jazyce Python. Kód lze i udržovat v externím souboru. Příklad je převod výšky v metrech na stopy:</p>
+<div class="highlight-XML notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;VRTDataset</span><span class="w"> </span><span class="na">rasterXSize=</span><span class="s">&quot;1200&quot;</span><span class="w"> </span><span class="na">rasterYSize=</span><span class="s">&quot;1200&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;SRS</span><span class="w"> </span><span class="na">dataAxisToSRSAxisMapping=</span><span class="s">&quot;2,1&quot;</span><span class="nt">&gt;</span>GEOGCS[&quot;WGS<span class="w"> </span>84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS<span class="w"> </span>84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AXIS[&quot;Latitude&quot;,NORTH],AXIS[&quot;Longitude&quot;,EAST],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]]<span class="nt">&lt;/SRS&gt;</span>
+<span class="w">  </span><span class="nt">&lt;GeoTransform&gt;</span><span class="w">  </span>1.4999583333333334e+01,<span class="w">  </span>8.3333333333333339e-04,<span class="w">  </span>0.0000000000000000e+00,<span class="w">  </span>5.0000416666666666e+01,<span class="w">  </span>0.0000000000000000e+00,<span class="w"> </span>-8.3333333333333339e-04<span class="nt">&lt;/GeoTransform&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;VRTRasterBand</span><span class="w"> </span><span class="na">dataType=</span><span class="s">&quot;Float32&quot;</span><span class="w"> </span><span class="na">band=</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="na">subClass=</span><span class="s">&quot;VRTDerivedRasterBand&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;PixelFunctionType&gt;</span>feets<span class="nt">&lt;/PixelFunctionType&gt;</span>
+<span class="w">  </span><span class="nt">&lt;PixelFunctionLanguage&gt;</span>Python<span class="nt">&lt;/PixelFunctionLanguage&gt;</span>
+<span class="w">  </span><span class="nt">&lt;PixelFunctionCode&gt;</span><span class="cp">&lt;![CDATA[</span>
+
+<span class="cp">import numpy as np</span>
+<span class="cp">def feets(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize, buf_radius, gt, **kwargs):</span>
+<span class="cp">        out_ar[:] = in_ar[0]*3.28084</span>
+
+<span class="cp">      ]]&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/PixelFunctionCode&gt;</span>
+<span class="w">  </span><span class="nt">&lt;SimpleSource&gt;</span>
+<span class="w">      </span><span class="nt">&lt;SourceFilename</span><span class="w"> </span><span class="na">relativeToVRT=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif<span class="nt">&lt;/SourceFilename&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/SimpleSource&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/VRTRasterBand&gt;</span>
+
+<span class="nt">&lt;/VRTDataset&gt;</span>
+</pre></div>
+</div>
+<p>A můžeme se pokusit získat statistické údaje</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM-feets.vrt -stats
+
+[...]
+Metadata:
+ STATISTICS_MAXIMUM=2752.158203125
+ STATISTICS_MEAN=1673.4303891539
+ STATISTICS_MINIMUM=648.65942382812
+ STATISTICS_STDDEV=365.32895543763
+ STATISTICS_VALID_PERCENT=100
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Varování</p>
+<p>Narazíme na problém, že kvůli bezpečnosti nelze vykonávat kód v Pythonu jen tak. Je potřeba nastavit proměnnou <code class="docutils literal notranslate"><span class="pre">GDAL_VRT_ENABLE_PYTHON</span></code> na hodnotu <code class="docutils literal notranslate"><span class="pre">YES</span></code>. Na os Linux: <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">GDAL_VRT_ENABLE_PYTHON=YES</span></code></p>
+</div>
+<p>Soubor by měl jít zobrazit i v QGIS.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rastrová data - GDAL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#rastrovy-datovy-model">Rastrový datový model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ogr/index.html">Vektorová data - OGR</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="gtiff.html" title="Parametry specifické pro formát GeoTIFF a COG"
+              >předchozí</a> |
+            <a href="virtual_filesystems.html" title="Virtuální souborové systémy"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

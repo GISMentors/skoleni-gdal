@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Parametry specifické pro formát GeoTIFF a COG &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="Virtual Raster format - VRT" href="vrt.html" />
+    <link rel="prev" title="gdal_rasterize" href="gdal_rasterize.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="gdal_rasterize.html" title="gdal_rasterize"
+             accesskey="P">předchozí</a> |
+          <a href="vrt.html" title="Virtual Raster format - VRT"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="parametry-specificke-pro-format-geotiff-a-cog">
+<h1>Parametry specifické pro formát GeoTIFF a COG<a class="headerlink" href="#parametry-specificke-pro-format-geotiff-a-cog" title="Permalink to this heading">¶</a></h1>
+<p>Každý formát má specifické možnosti, jak jeho použití zoptimalizovat. Někdy je to komprese, nastavení hodnoty <code class="docutils literal notranslate"><span class="pre">NULLDATA</span></code>, paralelní procesing, atd.</p>
+<p>Hodnoty specifické pro vstupní i výstupní formáty jsou popsány v dokumentaci ale i pomocí <code class="docutils literal notranslate"><span class="pre">gdalinfo</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo --format geotiff
+</pre></div>
+</div>
+<p>Čtení dokumentace je ale pohodlnější na webové stránce <a class="reference external" href="https://gdal.org/drivers/raster/gtiff.html">https://gdal.org/drivers/raster/gtiff.html</a></p>
+<p>Při vytváření výstupu ve formátu GeoTIFF je dobré některé parametry uvádět vždy nebo alespoň vědět, že existují a v případě problému je použít. Typickým problémem je, že dojde místo na disku, s daty se pracuje pomalu (při procesingu) nebo nejdou zobrazit (jsou moc velké i na QGIS).</p>
+<p>Parametry výstupního rastru se většinou nastavují pomocí parametru programu <code class="docutils literal notranslate"><span class="pre">gdalwarp</span></code> a dalších přepínačem <code class="docutils literal notranslate"><span class="pre">-co</span></code> (creation option):</p>
+<section id="nastaveni-komprese-formatu-geotiff">
+<h2>Nastavení komprese formátu GeoTIFF<a class="headerlink" href="#nastaveni-komprese-formatu-geotiff" title="Permalink to this heading">¶</a></h2>
+<p>GeoTIFF ve výchozím nastavení nepoužívá vnitřní kompresi. To vede k velkým souborům a rychlému zaplnění disku. Kompresi nastavím hodnotou <code class="docutils literal notranslate"><span class="pre">COMPRESS</span></code> a na výběr náme z</p>
+<ul class="simple">
+<li><p>JPEG</p></li>
+<li><p>LZW</p></li>
+<li><p>PACKBITS</p></li>
+<li><p>DEFLATE</p></li>
+</ul>
+<p>a mnoha dalších.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -co COMPRESS=DEFLATE _data/T33UWQ_20220907T095549_TCI.jp2 _data/T33UWQ_20220907T095549_TCI-compress.tiff
+
+     129M _data/T33UWQ_20220907T095549_TCI.jp2 # &lt;- toto je vstupní soubor
+
+     89M _data/T33UWQ_20220907T095549_TCI-compress-jpg.tiff
+     624M _data/T33UWQ_20220907T095549_TCI-compress.tiff
+     345M _data/T33UWQ_20220907T095549_TCI-uncompress.tiff
+     751M _data/T33UWQ_20220907T095549_TCI-compress-lzw.tiff
+</pre></div>
+</div>
+<p>Ne všechny kompresní algoritmy fungují dobře pro všechna data a je potřeba je vyzkoušet.</p>
+<p><code class="docutils literal notranslate"><span class="pre">gdalinfo</span></code> vám vypíše, jaký algoritmus je pro dataset využit.</p>
+</section>
+<section id="block-window">
+<h2>Block Window<a class="headerlink" href="#block-window" title="Permalink to this heading">¶</a></h2>
+<p>Většinou jsou data uložena po řádcích, a to není moc vhodné na čtení a následné zpracování. Může být vhodné organizovat data do bloků (block window):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo _data/Copernicus_DSM_COG_30_N49_00_E015_00_DEM.tif
+
+[...]
+Band 1 Block=2048x2048 Type=Float32, ColorInterp=Gray
+</pre></div>
+</div>
+<p>Bloky můžeme nastavit atributy <code class="docutils literal notranslate"><span class="pre">BLOCKYSIZE</span></code> a <code class="docutils literal notranslate"><span class="pre">BLOCKXSIZE</span></code>. Bloky musí být dělitelné 16.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -co TILED=YES -co BLOCKXSIZE=1024 -co BLOCKYSIZE=1024 _data/T33UWQ_20220907T095549_TCI.jp2 _data/T33UWQ_20220907T095549_TCI-block.tiff
+
+gdalinfo _data/T33UWQ_20220907T095549_TCI-block.tiff
+[...]
+
+
+Band 1 Block=1024x1024 Type=Byte, ColorInterp=Red
+Band 2 Block=1024x1024 Type=Byte, ColorInterp=Green
+Band 3 Block=1024x1024 Type=Byte, ColorInterp=Blue
+</pre></div>
+</div>
+</section>
+<section id="velky-tiff">
+<h2>Velký TIFF<a class="headerlink" href="#velky-tiff" title="Permalink to this heading">¶</a></h2>
+<p>Formát TIFF má omezení velikosti souboru. Toto omezení lze obejít přepínačem <code class="docutils literal notranslate"><span class="pre">BIGTIFF</span></code></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalwarp -co BIGTIFF=YES input.tiff output.tiff
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rastrová data - GDAL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#rastrovy-datovy-model">Rastrový datový model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ogr/index.html">Vektorová data - OGR</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="gdal_rasterize.html" title="gdal_rasterize"
+              >předchozí</a> |
+            <a href="vrt.html" title="Virtual Raster format - VRT"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

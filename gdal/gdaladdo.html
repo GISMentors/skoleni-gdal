@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>gdaladdo &#8212; GDAL školení GISMentors</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Rejstřík" href="../genindex.html" />
+    <link rel="search" title="Vyhledávání" href="../search.html" />
+    <link rel="next" title="gdaltindex" href="gdaltindex.html" />
+    <link rel="prev" title="gdal_translate" href="gdal_translate.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">GDAL školení GISMentors</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="gdal_translate.html" title="gdal_translate"
+             accesskey="P">předchozí</a> |
+          <a href="gdaltindex.html" title="gdaltindex"
+             accesskey="N">další</a> |
+          <a href="../genindex.html" title="Obecný rejstřík"
+             accesskey="I">rejstřík</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="gdaladdo">
+<h1>gdaladdo<a class="headerlink" href="#gdaladdo" title="Permalink to this heading">¶</a></h1>
+<p>Pro rychlejší zobrazování je nutné - často životně nutné, protože jinak QGIS nic nevykreslí, ale za to spadne - vytvořit tzv. přehledy v rostrových datech.</p>
+<p>GDAL projde rastrový soubor a vytvoří náhledy s horším rozlišením. Subor sice trochu naroste, ale pro zobrazování v malých měříctích je možné.</p>
+<p>Přehledy lze vytvářet přímo při vytváření, např. <code class="docutils literal notranslate"><span class="pre">gdalwarp</span></code> má parametr <code class="docutils literal notranslate"><span class="pre">-ovr</span></code>. Pokud ale dostanete už hotový rastrový soubor nebo prostě přehledy zapomete vytvořit, <code class="docutils literal notranslate"><span class="pre">gdaladdo</span></code> vám pomůže.</p>
+<p>Pro většinu případů je zbytečné zabývat se parametry. <code class="docutils literal notranslate"><span class="pre">gdaladdo</span></code> vám umožní hrát si s interpolační metodou, počtem úrovní, kompresí a podobně. Nejčastější použití je ale velice přímočaré:</p>
+<p>Ověříme velikost vstupního souboru</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ls -lha _data/T33UWQ_20220907T095549_TCI.tiff
+
+-rw-rw-r-- 1 user user 345M říj 22 14:16 _data/T33UWQ_20220907T095549_TCI.tiff
+</pre></div>
+</div>
+<p>Přidáme přehledy</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdaladdo _data/T33UWQ_20220907T095549_TCI.tiff
+</pre></div>
+</div>
+<p>A opět ověříme velikost</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ls -lha _data/T33UWQ_20220907T095549_TCI.tiff
+
+-rw-rw-r-- 1 user user 463M říj 23 14:14 _data/T33UWQ_20220907T095549_TCI.tiff
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">gdalinfo</span></code> nám prozradí, jak jsou přehledy vytvořeny</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>gdalinfo _data/T33UWQ_20220907T095549_TCI.tiff
+[...]
+Band 1 Block=10980x1 Type=Byte, ColorInterp=Red
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687, 344x344, 172x172
+Band 2 Block=10980x1 Type=Byte, ColorInterp=Green
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687, 344x344, 172x172
+Band 3 Block=10980x1 Type=Byte, ColorInterp=Blue
+  Overviews: 5490x5490, 2745x2745, 1373x1373, 687x687, 344x344, 172x172
+</pre></div>
+</div>
+<p>Po otevření v QGIS se bude soubor chovat pocitově „svižněji“.</p>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Úvod do knihovny GDAL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rastrová data - GDAL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#rastrovy-datovy-model">Rastrový datový model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#podporovane-formaty">Podporované formáty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ogr/index.html">Vektorová data - OGR</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Vyhledávání</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="OK" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="gdal_translate.html" title="gdal_translate"
+              >předchozí</a> |
+            <a href="gdaltindex.html" title="gdaltindex"
+              >další</a> |
+            <a href="../genindex.html" title="Obecný rejstřík"
+              >rejstřík</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2023 GISMentors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>
